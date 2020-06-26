@@ -42,6 +42,20 @@ namespace JSONTreeView
                     jElement.ProcessJson(this);
                     break;
 
+
+                case JsonValueKind.True:
+                    base.Header += $"{key} : true";
+                    break;
+
+                case JsonValueKind.False:
+                    base.Header += $"${key} : false";
+                    break;
+
+                case JsonValueKind.Undefined:
+                    base.Header += $"${key} : -undefined-";
+                    break;
+
+
                 default:
                     base.Header = key;
                     break;

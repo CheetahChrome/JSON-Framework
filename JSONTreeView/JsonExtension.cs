@@ -12,26 +12,50 @@ namespace JSONTreeView
         public static TreeViewItem ProcessJson(this JsonElement je, TreeViewItem root, bool showQuote = false)
         {
 
-            if (je.ValueKind == JsonValueKind.Object)
+            switch (je.ValueKind)
             {
-                root.BookEnd("{", "}", () =>
-                {
-                    je.EnumerateObject().Select(jElement => new TreeViewItemEx(jElement, showQuote))
-                        .ToList()
-                        .ForEach(tvi => root.Items.Add(tvi));
-                });
-            }
-            else
-            {
-                var arrItems = je.EnumerateArray();
+                case JsonValueKind.Object:
+                    root.BookEnd("{", "}", () =>
+                    {
+                        je.EnumerateObject().Select(jElement => new TreeViewItemEx(jElement, showQuote))
+                            .ToList()
+                            .ForEach(tvi => root.Items.Add(tvi));
+                    });
+                    break;
 
-                if (arrItems.Any())
-                {
-                    arrItems.Select((jElement, index) => new TreeViewItemEx(jElement, index, showQuote))
-                        .ToList()
-                        .ForEach(tvi => root.Items.Add(tvi));
-                }
+                case JsonValueKind.Array:
+                    var arrItems = je.EnumerateArray();
+
+                    if (arrItems.Any())
+                    {
+                        arrItems.Select((jElement, index) => new TreeViewItemEx(jElement, index, showQuote))
+                            .ToList()
+                            .ForEach(tvi => root.Items.Add(tvi));
+                    }
+                    break;
+
+                case JsonValueKind.Number:
+                case JsonValueKind.String:
+                   root.Header += $" : {je.GetRawText()}";
+                   break;
+
+                case JsonValueKind.Null:
+                    root.Header += $" : null";
+                    break;
+
+                case JsonValueKind.True:
+                    root.Header += $" : true";
+                    break;
+
+                case JsonValueKind.False:
+                    root.Header += $" : false";
+                    break;
+
+                case JsonValueKind.Undefined:
+                    root.Header += $" : -undefined-";
+                    break;
             }
+
 
             return root;
         }
