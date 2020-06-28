@@ -3,11 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>A WPF package which allows for the reading in of JSON and the output the json into a treeview.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>2020</Copyright>
     <PackageIcon>Buddybleu.png</PackageIcon>
+    <PackageReleaseNotes>V1.0 - `ProcessJson(..text...)` creates tree in WPF TreeView
+               - TreeView's `Tag' Property contains the `JsonDocument` instance used to create the tree.
+        - Extension for JsonDocument of `ToFormattedJsonString` produces pretty print json version.
+V1.1 - Proper handling of individual strings/numbers/null/undefined for arrays.</PackageReleaseNotes>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -37,9 +37,30 @@ namespace JSON_Display
         private void LoadCommands()
         {
             VM.JSONLoadInternal = new OperationCommand(o =>
-            ShowJSON(
-                @"[{""BatchId"":0,""AccessionChanges"":[{""LabId"":8675309,""InstanceChanges"":[{""Property"":""Note"",""ChangedTo"":""Jabberwocky"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""Instrument"",""ChangedTo"":""instrumented"",""UniqueId"":null,""SummaryInstance"":null}],""DetailChanges"":[{""Property"":""Comments"",""ChangedTo"":""2nd Comment"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""CCC"",""ChangedTo"":""XR71"",""UniqueId"":null,""SummaryInstance"":null}]}]}]"
-                    ));
+                ShowJSON(
+                    @"[{""BatchId"":0,""AccessionChanges"":[{""LabId"":8675309,""InstanceChanges"":[{""Property"":""Note"",""ChangedTo"":""Jabberwocky"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""Instrument"",""ChangedTo"":""instrumented"",""UniqueId"":null,""SummaryInstance"":null}],""DetailChanges"":[{""Property"":""Comments"",""ChangedTo"":""2nd Comment"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""CCC"",""ChangedTo"":""XR71"",""UniqueId"":null,""SummaryInstance"":null}]}]}]"
+                        ));
+
+            //                ShowJSON(@"{
+            //    ""Pre"": null,
+            //    ""Text"": ""1"",
+            //    ""iPage"": 1,
+            //    ""Post"": null,
+            //    ""IsValid"" : true,
+            //    ""Uri"": ""http://Testing.org/2019.html"",
+            //    ""PageCount"": 1,
+            //    ""TopicTitle"": ""???"",
+            //    ""PageLinks"": [""http://www.test.org"", ""http://www.test2.org"", ""http://www.test3.org""],
+            //    ""WebPages"": [{
+            //        ""Link"": ""http://www.Alpha.org/institute.html"",
+            //        ""URI"": ""http://www.Beta.org/t986132.html"",
+            //        ""Infos"": [],
+            //        ""IsCached"": true,
+            //        ""PageHTML"": ""Cleared"",
+            //        ""PageNumber"": ""1""
+            //    }]
+            //}"));
+
 
             VM.JSONLoadFromClipboard = new OperationCommand(o =>
             ShowJSON(Clipboard.ContainsText()
