@@ -76,6 +76,7 @@ namespace JSON_Display
             tView.ProcessJson(text);
 
             VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
+            VM.CSharpText = (tView.Tag as JsonDocument).ToCSharpClassesString();
 
         }
 
