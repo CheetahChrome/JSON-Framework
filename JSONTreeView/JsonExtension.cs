@@ -1,9 +1,11 @@
-﻿using System;
+﻿using JSON_Enumerate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Controls;
+using JSON_Enumerate.Implementation;
 
 namespace JSONTreeView
 {
@@ -71,6 +73,14 @@ namespace JSONTreeView
 
         public static string ToFormattedJsonString(this JsonDocument doc)
             => JsonSerializer.Serialize(doc, new JsonSerializerOptions() {WriteIndented = true});
+
+        public static string ToCSharpClassesString(this JsonDocument doc, string topClass = "Top")
+        {
+
+            return doc.RootElement.WalkStructure<CSharpClass, CSharpProperty>
+                (new CSharpClass(topClass), null).ToString();
+
+        }
 
     }
 }

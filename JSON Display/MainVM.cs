@@ -31,6 +31,14 @@ namespace JSON_Display
 
         #region Properties
 
+        private string _CSharpText;
+
+        public string CSharpText
+        {
+            get => _CSharpText;
+            set { _CSharpText = value; OnPropertyChanged(nameof(CSharpText)); }
+        }
+
         private string _JSONText;
 
         public string JSONText
@@ -38,13 +46,7 @@ namespace JSON_Display
             get => _JSONText;
             set
             {
-
-                if (string.IsNullOrWhiteSpace(value))
-                    _JSONText = string.Empty;
-                else
-                {
-                    _JSONText = value;
-                }
+                _JSONText = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
                 OnPropertyChanged(nameof(JSONText));
             }
         }

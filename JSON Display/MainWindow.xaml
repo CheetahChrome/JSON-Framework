@@ -59,6 +59,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -100,6 +101,16 @@
         </StackPanel>
 
         <TabControl Grid.Row="1" Margin="4,4,4,4" TabStripPlacement="Left"  FontFamily="Consolas" FontSize="14" Grid.ColumnSpan="2" >
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+
+                </Style>
+            </TabControl.Resources>
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
                     <Setter Property="LayoutTransform">
@@ -114,7 +125,11 @@
                 <TreeView x:Name="tView"  HorizontalAlignment="Stretch" FontSize="{Binding MainFontSize}" PreviewMouseWheel="MouseWheelScroll" />
             </TabItem>
             <TabItem Header="Text" Width="100" Height="40">
-                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding JSONText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+                <TextBox Text="{Binding JSONText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            </TabItem>
+            <TabItem Header="C#" Width="100" Height="40">
+                <TextBox
+                     Text="{Binding CSharpText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
             </TabItem>
 
         </TabControl>

@@ -24,4 +24,8 @@ V1.1 - Proper handling of individual strings/numbers/null/undefined for arrays.<
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JSON Enumerate\JSON Enumerate.csproj" />
+  </ItemGroup>
+
 </Project>
