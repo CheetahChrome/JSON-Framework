@@ -20,7 +20,7 @@
             </DrawingImage.Drawing>
         </DrawingImage>
 
-
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
 
     </Application.Resources>
 </Application>

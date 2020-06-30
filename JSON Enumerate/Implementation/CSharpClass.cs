@@ -21,13 +21,15 @@ namespace JSON_Enumerate.Implementation
         {
             var sb = new StringBuilder();
 
+            var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
+
             if (asProperty) // This may not be used...investigate
             {
-                sb.AppendLine($"public {Name} {Name} {{ get; set; }}");
+                sb.AppendLine($"public {name} {Name} {{ get; set; }}");
             }
             else
             {
-                sb.AppendLine($"public class {Name}");
+                sb.AppendLine($"public class {name}");
                 sb.AppendLine("{");
                 sb.AppendLine(string.Join(Environment.NewLine, Properties.Select(prp => prp.ToString())));
 

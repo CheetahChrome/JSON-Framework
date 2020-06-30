@@ -40,6 +40,7 @@ namespace JSON_Enumerate
                     if (instance.Properties == null)
                         instance.Properties = new List<IProperty>();
 
+
                     instance.Properties.AddRange(
                         je.EnumerateObject().Select(jp =>  WalkProperties<P,T>(jp, originParent))
                                                      .OfType<IProperty>()
@@ -79,15 +80,14 @@ namespace JSON_Enumerate
 
         public static P WalkProperties<P,T>(JsonProperty jp, T originParent ) where P : IProperty, new() where T : IJsonOperation, new()
         {
-            var instance = new P() { Name = jp.Name };
+            var key = jp.Name.Trim();
+            var instance = new P() { Name = key };
             var jElement = jp.Value;
-
- //           base.ToolTip = jElement.ValueKind.ToString();
-            var key = jp.Name;
 
             switch (jElement.ValueKind)
             {
 
+                case JsonValueKind.Null:
                 case JsonValueKind.String:
                     instance.JsonType = JsonPropType.StrType;
                     instance.Size = jElement.GetRawText().Length;
@@ -105,55 +105,33 @@ namespace JSON_Enumerate
                 //    base.Header = $"{key} : null";
                 //    break;
 
-                case JsonValueKind.Object:
-                    // Set a property to a user type
-                    instance.JsonType = JsonPropType.UserType;
-
-                    // Generate a sub object UserType which is named as the key
-
-                    var sub = new T() { Name = key };
-
-                    // Add it to the origin parent
-                    originParent.SubClasses.Add(sub);
-
-                    // Recurse back into processing
-
-                    WalkStructure<T, P>(jElement, sub, originParent);
-
-                    break;
-
                 case JsonValueKind.Array:
-                    instance.JsonType = JsonPropType.UserType;
-                    var subArray = new T() { Name = key };
+                case JsonValueKind.Object:
+                    // Check to see if it is groundhog day and and a duplicate was found.
 
-                    // Set a property to a user type
-                    instance.JsonType = JsonPropType.UserType;
+                    if (!originParent.SubClasses.Any(cl =>
+                        cl.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        // Set a property to a user type
+                        instance.JsonType = JsonPropType.UserType;
 
-                    // Add it to the origin parent
-                    originParent.SubClasses.Add(subArray);
+                        // Generate a sub object UserType which is named as the key
 
-                    WalkStructure<T, P>(jElement, subArray, originParent);
+                        var sub = new T() {Name = key};
 
-                    //base.Header = key;
-                    //base.ToolTip += $" ({jElement.GetArrayLength()})";
+                        // Add it to the origin parent
+                        originParent.SubClasses.Add(sub);
 
-                    //jElement.ProcessJson(this);
+                        // Recurse back into processing
+
+                        WalkStructure<T, P>(jElement, sub, originParent);
+                    }
+
                     break;
-
-
-                    //case JsonValueKind.Undefined:
-                    //    base.Header += $"${key} : -undefined-";
-                    //    break;
-
-
-                    //default:
-                    //    base.Header = key;
             }
-
 
             return instance;
         }
-
 
     }
 }

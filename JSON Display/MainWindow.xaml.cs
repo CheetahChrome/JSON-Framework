@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JSON_Display.Operation;
+using JSON_Enumerate.Implementation;
 using JSONTreeView;
 using Newtonsoft.Json.Linq;
 
@@ -72,6 +73,9 @@ namespace JSON_Display
         private void ShowJSON(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return;
+
+            SettingsSingleton.Settings = VM.CSharp;
+
 
             tView.ProcessJson(text);
 

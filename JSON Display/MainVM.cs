@@ -18,6 +18,11 @@ namespace JSON_Display
         public ICommand  JSONLoadInternal     { get; set; } 
         public ICommand JSONLoadFromClipboard { get; set; }
 
+        public ICommand CMDSettingsShow => new OperationCommand((o) =>
+            {
+                ShowSettingsDialog = !ShowSettingsDialog;
+            }); 
+
         #endregion
 
         #region Events
@@ -30,6 +35,24 @@ namespace JSON_Display
         #endregion
 
         #region Properties
+
+
+        private bool _ShowSettingsDialog;
+
+        public bool ShowSettingsDialog
+        {
+            get => _ShowSettingsDialog;
+            set { _ShowSettingsDialog = value; OnPropertyChanged(nameof(ShowSettingsDialog)); }
+        }
+
+        private CSharpSettings _CSharp;
+
+        public CSharpSettings CSharp
+        {
+            get => _CSharp;
+            set { _CSharp = value; OnPropertyChanged(nameof(CSharp)); }
+        }
+
 
         private string _CSharpText;
 
@@ -62,6 +85,10 @@ namespace JSON_Display
 
         #region Construction/Initialization
 
+        public MainVM()
+        {
+            CSharp = new CSharpSettings();
+        }
         #endregion
 
         #region Methods
