@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JSON_Display"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance {x:Type local:MainVM}}"
         Title="JSON Framework App" Height="450" Width="800">
@@ -61,6 +62,33 @@
             </Setter>
         </Style>
 
+        <system:Double x:Key="SlideOffSet">300</system:Double>
+
+        <Storyboard x:Key="SlideRight">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="0" To="{StaticResource SlideOffSet}"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="SlideLeft">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="{StaticResource SlideOffSet}" To="0" 
+                             Duration="0:0:0.3" />
+
+        </Storyboard>
+
+        <Style TargetType="{x:Type StackPanel}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowSettingsDialog}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard Storyboard="{StaticResource SlideLeft}" />
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard Storyboard="{StaticResource SlideRight}" />
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -73,9 +101,7 @@
         </Grid.RowDefinitions>
         
 
-
         <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0">
-
             <Button ToolTip="Pull JSON From Clipboard" Height="40" Width="40" Margin="5,0,0,0" Style="{DynamicResource RoundCorner}" Command="{Binding JSONLoadFromClipboard}">
                 <TextBlock Text="✊"
                     FontFamily="Segoe UI Symbol"
@@ -96,12 +122,12 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+        <!--<StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
             <Button Width="40" Height="40" ToolTip="Change Settings" Margin="0,0,10,0" Command="{Binding CMDSettingsShow}" Style="{DynamicResource RoundCorner}">
                 <Image Source="{DynamicResource diGear}" Height="22" Width="22" HorizontalAlignment="Center" VerticalAlignment="Center"  />
             </Button>
-        </StackPanel>
-
+        </StackPanel>-->
+        
         <TabControl Grid.Row="1" Margin="4,4,4,4" TabStripPlacement="Left"  FontFamily="Consolas" FontSize="14" Grid.ColumnSpan="2" >
             <TabControl.Resources>
                 <Style TargetType="{x:Type TextBox}">
@@ -134,11 +160,52 @@
                      Text="{Binding CSharpText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
             </TabItem>
 
+            <TabItem Header="SQL Table" Width="100" Height="40">
+                <TextBox
+                    Text="{Binding SQLTableText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            </TabItem>
+
+            <TabItem Header="Table Type" Width="100" Height="40">
+                <TextBox
+                    Text="{Binding TableTypeText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            </TabItem>
+
         </TabControl>
 
-        <Controls:Settings Grid.ColumnSpan="2" Grid.RowSpan="2" Width="400" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center"
-                           CSharp="{Binding CSharp}"
-                           Visibility="{Binding ShowSettingsDialog, Converter={StaticResource BooleanToVisibility}}"/>
+        <StackPanel Panel.ZIndex="99" 
+                    Orientation="Horizontal" 
+                    Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" >
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideLeft}" />
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideRight}" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel.RenderTransform>
+                <TranslateTransform X="{StaticResource SlideOffSet}" Y="0"/>
+            </StackPanel.RenderTransform>
+
+            <ToggleButton x:Name="SlideState" Height="22" Width="22" VerticalAlignment="Top" Foreground="LightBlue" BorderThickness="0" Opacity="10" >
+
+            <Image Source="{DynamicResource diCSharp}" 
+                       Height="16" Width="16" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"  />
+            </ToggleButton>
+
+            <Controls:Settings Width="{StaticResource SlideOffSet}" Height="150"
+                               Panel.ZIndex="100"
+                               CSharp="{Binding CSharp}" 
+            />
+        </StackPanel>
 
     </Grid>
 

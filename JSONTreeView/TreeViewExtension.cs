@@ -28,17 +28,16 @@ namespace JSONTreeView
             if (tv == null)
                 return null;
 
-            try
-            {
-                var doc = JsonDocument.Parse(json);
-                tv.Tag = doc;
-                tv.ProcessJson(doc, showQuote);
-            }
-            catch (Exception ex)
-            {
-                var errorJSON = $@"{{ ""Error"" : ""{ex.Message}"", ""Exception"" : ""{ex.GetType()}"" }}";
+            var parsedJSON = json.ParseJson();
 
-                tv.ProcessJson(JsonDocument.Parse(errorJSON), showQuote);
+            if (parsedJSON.IsValid)
+            {
+                tv.Tag = parsedJSON.ValidJsonDoc;
+                tv.ProcessJson(parsedJSON.ValidJsonDoc, showQuote);
+            }
+            else
+            {
+                tv.ProcessJson(parsedJSON.ErrorMessageDoc, showQuote);
             }
 
             return tv;

@@ -42,19 +42,19 @@ namespace JSONTreeView
                    break;
 
                 case JsonValueKind.Null:
-                    root.Header += $" : null";
+                    root.Header += " : null";
                     break;
 
                 case JsonValueKind.True:
-                    root.Header += $" : true";
+                    root.Header += " : true";
                     break;
 
                 case JsonValueKind.False:
-                    root.Header += $" : false";
+                    root.Header += " : false";
                     break;
 
                 case JsonValueKind.Undefined:
-                    root.Header += $" : -undefined-";
+                    root.Header += " : -undefined-";
                     break;
             }
 
@@ -62,14 +62,12 @@ namespace JSONTreeView
             return root;
         }
 
-
         public static void BookEnd(this TreeViewItem root, string start, string end, Action operation)
         {
             root.Items.Add(new TreeViewItem() { Header = start });
             operation.Invoke();
             root.Items.Add(new TreeViewItem() { Header = end });
         }
-
 
         public static string ToFormattedJsonString(this JsonDocument doc)
             => JsonSerializer.Serialize(doc, new JsonSerializerOptions() {WriteIndented = true});
@@ -82,5 +80,37 @@ namespace JSONTreeView
 
         }
 
+
+        /// <summary>
+        /// Take a JSON string and parse it into a JsonDocument.
+        /// </summary>
+        /// <remarks>Invalid or failed json returns the `errorMessage` json document</remarks>
+        /// <param name="json">Valid JSON</param>
+        /// <returns></returns>
+        public static (bool IsValid, JsonDocument ValidJsonDoc, JsonDocument ErrorMessageDoc) ParseJson(this string json)
+        {
+            JsonDocument errorMessage = null;
+            JsonDocument result = null;
+            var isValid = false;
+            var errorJSON = string.Empty;
+
+            try
+            {
+                result = JsonDocument.Parse(json);
+                isValid = (result != null);
+
+                if (isValid)
+                    errorJSON = $@"{{ ""Error"" : ""No JSON Doc Returned from Parse."", ""Exception"" : ""-None-"" }}";
+            }
+            catch (Exception ex)
+            {
+                errorJSON = $@"{{ ""Error"" : ""{ex.Message}"", ""Exception"" : ""{ex.GetType()}"" }}";
+            }
+
+            if (!string.IsNullOrEmpty(errorJSON))
+                errorMessage = JsonDocument.Parse(errorJSON);
+
+            return (isValid, result, errorMessage);
+        }
     }
 }

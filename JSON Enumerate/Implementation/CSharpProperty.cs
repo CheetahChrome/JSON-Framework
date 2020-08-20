@@ -5,17 +5,29 @@ using System.Text;
 
 namespace JSON_Enumerate.Implementation
 {
-    public class CSharpProperty : IProperty
+    public class CSharpProperty : BareJsonProperty
     {
-        public string Name { get; set; }
-        public int Size { get; set; }
-        public JsonPropType JsonType { get; set; }
+
+        public int TableTypeNumber { get; set; }
+
+        public string ToString(int tableTypeNumber)
+        {
+            TableTypeNumber = tableTypeNumber;
+            return ToString();
+        }
 
         public override string ToString()
         {
-            var sb = new StringBuilder(@$"   [JsonProperty(""{Name}"")]");
-            sb.Append(Environment.NewLine);
-            sb.Append("   public ");
+            var prefix = "  ";
+
+            var sb = new StringBuilder();
+
+            if (TableTypeNumber > 0)
+                sb.AppendLine($"{prefix}[TableType({TableTypeNumber})]");
+
+            sb.AppendLine(@$"{prefix}[JsonProperty(""{Name}"")]");
+
+            sb.Append($"{prefix}public ");
 
             switch (JsonType)
             {

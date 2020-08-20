@@ -76,12 +76,21 @@ namespace JSON_Display
 
             SettingsSingleton.Settings = VM.CSharp;
 
+            var parseResult = text.ParseJson();
 
-            tView.ProcessJson(text);
+            if (!parseResult.IsValid)
+            {
+                tView.ProcessJson(parseResult.ErrorMessageDoc);
+                return;
+            }
+
+            // If we are sorting, C# will sort it, so process that first.
+            VM.CSharpText = parseResult.ValidJsonDoc.ToCSharpClassesString(VM.CSharp.ClassName);
+
+            tView.ProcessJson(parseResult.ValidJsonDoc);
 
             VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
-            VM.CSharpText = (tView.Tag as JsonDocument).ToCSharpClassesString();
-
+            
         }
 
         private void MouseWheelScroll(object sender, MouseWheelEventArgs e)

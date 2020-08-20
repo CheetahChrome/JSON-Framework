@@ -83,6 +83,7 @@ namespace JSON_Enumerate
             var key = jp.Name.Trim();
             var instance = new P() { Name = key };
             var jElement = jp.Value;
+            instance.RawValueText = jElement.GetRawText();
 
             switch (jElement.ValueKind)
             {

@@ -12,12 +12,14 @@ namespace JSON_Display.Operation
     {
 
         #region Variables
-
         private bool _AddDTOSuffix;
+        private string _ClassName;
+        private bool _AddTableTypeConstraint;
+        private bool _IsSortProperties;
+
         #endregion
 
         #region Properties
-
 
         public bool AddDTOSuffix
         {
@@ -25,6 +27,23 @@ namespace JSON_Display.Operation
             set { _AddDTOSuffix = value; OnPropertyChanged(nameof(AddDTOSuffix)); }
         }
 
+        public string ClassName
+        {
+            get => _ClassName;
+            set { _ClassName = value; OnPropertyChanged(nameof(ClassName)); }
+        }
+
+        public bool AddTableTypeConstraint
+        {
+            get => _AddTableTypeConstraint;
+            set { _AddTableTypeConstraint = value; OnPropertyChanged(nameof(AddTableTypeConstraint)); }
+        }
+
+        public bool IsSortProperties
+        {
+            get => _IsSortProperties;
+            set { _IsSortProperties = value; OnPropertyChanged(nameof(IsSortProperties)); }
+        }
         #endregion
 
         #region Construction/Initialization
