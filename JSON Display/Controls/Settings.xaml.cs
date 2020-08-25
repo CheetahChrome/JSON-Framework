@@ -26,10 +26,10 @@ namespace JSON_Display.Controls
         #region public CSharpSettings CSharp
 
         /// <summary>The settings for csharp processor</summary>
-        public CSharpSettings CSharp
+        public OperationSettings CSharp
         {
-            get => GetValue(CSharpProperty) as CSharpSettings;
-            set { SetValue(CSharpProperty, value); }
+            get => GetValue(CSharpProperty) as OperationSettings;
+            set => SetValue(CSharpProperty, value);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace JSON_Display.Controls
         public static readonly DependencyProperty CSharpProperty =
             DependencyProperty.Register(
                 "CSharp",
-                typeof(CSharpSettings),
+                typeof(OperationSettings),
                 typeof(Settings),
                 new PropertyMetadata(null));
         #endregion public CSharpSettings CSharp

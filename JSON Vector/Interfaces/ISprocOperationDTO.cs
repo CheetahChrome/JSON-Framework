@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 namespace JSON_Vector.Interfaces
 {
-    public interface ISprocOperationDTO
+    public interface ISprocOperationDTO : ISprocDTO
     {
-        string StoredProcedureName { get; }
+        //string StoredProcedureName { get; }
 
         // If the derived is a table type, then provide its name here. 
         string TableTypeName { get; }
@@ -22,11 +22,11 @@ namespace JSON_Vector.Interfaces
 
         List<Tuple<string, DateTime>> ExtractDateTimes();
 
-        /// <summary>
-        /// Is the sproc being used, uses table types instead
-        /// of just raw parameters?
-        /// </summary>
-        bool UsesTableTypes { get; }
+        ///// <summary>
+        ///// Is the sproc being used, uses table types instead
+        ///// of just raw parameters?
+        ///// </summary>
+        //bool UsesTableTypes { get; }
 
         // When dealing with multiples, provide a common table to use. 
         DataTable ExtractTable();
@@ -55,6 +55,15 @@ namespace JSON_Vector.Interfaces
         /// </summary>
         /// <returns>The sql parameters to be sent to the database.</returns>
         SqlParameter GenerateSQLParameter(DataTable table);
+
+
+        /// <summary>
+        /// Takes a list of items and generates a sqlparameter based on the instances themselves.
+        /// </summary>
+        /// <typeparam name="T">Type of class which adheres to the ISprocOperationDTO interface</typeparam>
+        /// <param name="items">Actual instance items.</param>
+        /// <returns>The sql parameters to be sent to the database.</returns>
+        SqlParameter ProcessThenYieldMultiples<T>(IList<T> items) where T : class, ISprocOperationDTO, new();
 
     }
 

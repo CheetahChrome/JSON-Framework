@@ -40,7 +40,7 @@ namespace JSON_Vector
         public string SourceName { get; set; }
 
         [NotMapped]
-        public virtual string TableTypeName { get { return "TableTypeNameInvalid"; } }
+        public virtual string TableTypeName => "TableTypeNameInvalid";
 
 
         [NotMapped]
@@ -141,7 +141,7 @@ namespace JSON_Vector
 
 
         [NotMapped]
-        public virtual string StoredProcedureName { get { return string.Empty; } }
+        public virtual string StoredProcedureName => string.Empty;
 
         public virtual List<Tuple<string, bool>> ExtractBools()
         {

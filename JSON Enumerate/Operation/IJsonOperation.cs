@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace JSON_Enumerate.Operation
 {
@@ -14,5 +15,7 @@ namespace JSON_Enumerate.Operation
         List<IJsonOperation> SubClasses { get; set; }
 
         public string ToString(bool asProperty);
+
+        ICommand OverrideProperty { get; set; }
     }
 }

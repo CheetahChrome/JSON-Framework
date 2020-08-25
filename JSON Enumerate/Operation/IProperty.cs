@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace JSON_Enumerate.Operation
 {
@@ -10,7 +11,6 @@ namespace JSON_Enumerate.Operation
     /// </summary>
     public interface IProperty
     {
-         
         string Name { get; set; }
 
         string RawValueText { get; set; }
@@ -24,6 +24,8 @@ namespace JSON_Enumerate.Operation
         bool IsUndefined();
 
         JsonPropType JsonType { get; set; }
+
+        ICommand OverrideProperty { get; set; }
 
     }
 }

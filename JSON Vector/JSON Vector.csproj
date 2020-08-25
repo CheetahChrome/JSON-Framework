@@ -1,8 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>JSON_Vector</RootNamespace>
+    <Version>1.2.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>2020</Copyright>
+    <Description>Classes and methods to provide a transport to SQL Server when using sprocs. Can create sql parameters for user defined table types. An ORM replacement.</Description>
+    <PackageIcon>Buddybleu.png</PackageIcon>
+    <PackageReleaseNotes>V1.1 Initial which provides `SprocOperationsBase` and GenerateSQLParameter and ProcessThenYieldMultiples.
+V1.2 Provides `VectorDatabase` connection object which can send table type data to the database usinge `SendToDatabase`.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Omega Technical Consulting</Company>
+    <PackageId>JSONVector</PackageId>
+    <PackageTags>JSON SQLParameter</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +22,13 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0-preview.6.20305.6" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
     <PackageReference Include="System.Text.Json" Version="5.0.0-preview.6.20305.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Buddybleu.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

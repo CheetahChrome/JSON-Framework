@@ -8,7 +8,7 @@ using JSON_Enumerate.Operation;
 
 namespace JSON_Display.Operation
 {
-    public class CSharpSettings : INotifyPropertyChanged, IJsonSettings
+    public class OperationSettings : INotifyPropertyChanged, IJsonSettings
     {
 
         #region Variables
@@ -16,10 +16,34 @@ namespace JSON_Display.Operation
         private string _ClassName;
         private bool _AddTableTypeConstraint;
         private bool _IsSortProperties;
+        private bool _AskOnProperties;
+        private bool _AddJsonProperty;
+        private bool _AddJsonPropertyName;
 
         #endregion
 
         #region Properties
+
+
+        private string _Name;
+
+        public string Name
+        {
+            get => _Name;
+            set { _Name = value; OnPropertyChanged(nameof(Name)); }
+        }
+
+        public bool AddJsonPropertyName
+        {
+            get => _AddJsonPropertyName;
+            set { _AddJsonPropertyName = value; OnPropertyChanged(nameof(AddJsonPropertyName)); }
+        }
+
+        public bool AddJsonProperty
+        {
+            get => _AddJsonProperty;
+            set { _AddJsonProperty = value; OnPropertyChanged(nameof(AddJsonProperty)); }
+        }
 
         public bool AddDTOSuffix
         {
@@ -44,6 +68,13 @@ namespace JSON_Display.Operation
             get => _IsSortProperties;
             set { _IsSortProperties = value; OnPropertyChanged(nameof(IsSortProperties)); }
         }
+
+        public bool AskOnProperties
+        {
+            get => _AskOnProperties;
+            set { _AskOnProperties = value; OnPropertyChanged(nameof(AskOnProperties)); }
+        }
+
         #endregion
 
         #region Construction/Initialization

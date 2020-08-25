@@ -1,23 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace JSON_Enumerate.Operation
 {
     public class JsonOperationBase : IJsonOperation
     {
-        public string Name { get; set; }
 
         public List<IProperty> Properties { get; set; }
 
         public List<IJsonOperation> SubClasses { get; set; }
 
-        public JsonOperationBase(string seedName) : this() => Name = seedName;
+        public ICommand OverrideProperty { get; set; }
 
-        public JsonOperationBase()
+        public IJsonSettings Settings { get; set; }
+        public string Name
         {
+            get => Settings?.Name ?? "Undefined";
+            set => throw new NotImplementedException();
+        }
+
+        public JsonOperationBase(IJsonSettings settings, ICommand overrideProperty = null) 
+        {
+            OverrideProperty = overrideProperty;
+            Settings = settings;
             Properties = new List<IProperty>();
             SubClasses = new List<IJsonOperation>();
         }
+
+        public JsonOperationBase() { }
+
 
         /// <summary>
         /// This must be overriden (`new`) on the derived to export the results.
@@ -28,6 +40,5 @@ namespace JSON_Enumerate.Operation
         {
             throw new NotImplementedException();
         }
-        
     }
 }

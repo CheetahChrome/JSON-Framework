@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using JSON_Enumerate.Operation;
 
 namespace JSON_Enumerate.Implementation
@@ -20,6 +21,8 @@ namespace JSON_Enumerate.Implementation
 
         public bool IsId() =>
             !IsUserType() && !IsUndefined() && Name.EndsWith("id", StringComparison.OrdinalIgnoreCase);
+
+        public ICommand OverrideProperty { get; set; }
 
 
         public override string ToString()

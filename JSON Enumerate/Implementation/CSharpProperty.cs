@@ -18,14 +18,22 @@ namespace JSON_Enumerate.Implementation
 
         public override string ToString()
         {
-            var prefix = "  ";
+            const string prefix = "  ";
 
             var sb = new StringBuilder();
 
             if (TableTypeNumber > 0)
                 sb.AppendLine($"{prefix}[TableType({TableTypeNumber})]");
 
-            sb.AppendLine(@$"{prefix}[JsonProperty(""{Name}"")]");
+
+            // [JsonProperty("Wind")]
+            if (SettingsSingleton.Settings.AddJsonProperty)
+                sb.AppendLine(@$"{prefix}[JsonProperty(""{Name}"")]");
+
+            // [JsonPropertyName("Wind")]
+            if (SettingsSingleton.Settings.AddJsonProperty)
+                sb.AppendLine(@$"{prefix}[JsonPropertyName(""{Name}"")]");
+
 
             sb.Append($"{prefix}public ");
 
@@ -36,6 +44,7 @@ namespace JSON_Enumerate.Implementation
                     sb.Append("string ");
                     break;
                 case JsonPropType.NumberType:
+                //    OverrideProperty?.Execute(null);
                     sb.Append("int ");
                     break;
 

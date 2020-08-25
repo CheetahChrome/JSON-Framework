@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:JSON_Display.Controls"
              mc:Ignorable="d" 
              x:Name="ucSettings"
-             d:DesignHeight="150" d:DesignWidth="300" Background="White" Opacity="80" >
+             d:DesignHeight="360" d:DesignWidth="310" Background="White" Opacity="80" >
     <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -17,23 +17,47 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="4"/>
         </Grid.RowDefinitions>-->
-    <GroupBox Header="C#" Margin="2" >
+    <GroupBox Header="Settings" Margin="2" >
         <StackPanel Orientation="Vertical" >
 
-            <CheckBox  Content="Add `DTO` Suffix" Margin="10,6,0,6" 
-                       IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddDTOSuffix}"/>
-
-            <CheckBox  Content="Add `TableType` Constraint" Margin="10,6,0,6" 
-                       IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddTableTypeConstraint}"/>
+            <StackPanel Orientation="Horizontal" Margin="10,6,0,6">
+                <Label Content="Name" />
+                <TextBox HorizontalAlignment="Center" Width="200" Height="28" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                         Text="{Binding ElementName=ucSettings, Path=CSharp.ClassName}"/>
+            </StackPanel>
 
             <CheckBox  Content="Sort Properties" Margin="10,6,0,6" 
                        IsChecked="{Binding ElementName=ucSettings, Path=CSharp.IsSortProperties}"/>
 
-            <StackPanel Orientation="Horizontal" Margin="10,6,0,6">
-                <Label Content="Class Name" />
-                <TextBox HorizontalAlignment="Center" Width="200" Height="28" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                             Text="{Binding ElementName=ucSettings, Path=CSharp.ClassName}"/>
-            </StackPanel>
+
+            <CheckBox  Content="Ask for all non string properties" Margin="10,6,0,6" 
+                       IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AskOnProperties}"/>
+
+
+
+            <GroupBox Header="C#" Margin="2" >
+                <StackPanel Orientation="Vertical" >
+
+                    <CheckBox  Content="Add `TableType` Attribute" Margin="10,6,0,6" 
+                               IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddTableTypeConstraint}"/>
+
+                    <CheckBox  Content="Add `JsonProperty` Attribute (Json.net)" Margin="10,6,0,6" 
+                               IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddJsonProperty}"/>
+
+                    <CheckBox  Content="Add `JsonPropertyName` Attribute (Microsoft)" Margin="10,6,0,6" 
+                               IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddJsonPropertyName}"/>
+
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="SQL" Margin="2" >
+                <StackPanel Orientation="Vertical" >
+
+                    <CheckBox  Content="Add `DTO` Suffix" Margin="10,6,0,6" 
+                       IsChecked="{Binding ElementName=ucSettings, Path=CSharp.AddDTOSuffix}"/>
+
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
     </GroupBox>
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Controls;
 using JSON_Enumerate.Implementation;
+using JSON_Enumerate.Operation;
 
 namespace JSONTreeView
 {
@@ -72,14 +73,17 @@ namespace JSONTreeView
         public static string ToFormattedJsonString(this JsonDocument doc)
             => JsonSerializer.Serialize(doc, new JsonSerializerOptions() {WriteIndented = true});
 
-        public static string ToCSharpClassesString(this JsonDocument doc, string topClass = "Top")
-        {
+        public static string ToCSharpClassesString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
+            => doc.RootElement.WalkStructure<CSharpClass, CSharpProperty>
+                (new CSharpClass(settings, overrideProperty), null).ToString();
 
-            return doc.RootElement.WalkStructure<CSharpClass, CSharpProperty>
-                (new CSharpClass(topClass), null).ToString();
+        public static string ToSqlTableString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
+            => doc.RootElement.WalkStructure<SQLTable, SQLProperty>
+                (new SQLTable(settings, overrideProperty), null).ToString();
 
-        }
-
+        public static string ToSqlTableTypeString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
+            => doc.RootElement.WalkStructure<SqlTableType, SQLProperty>
+                (new SqlTableType(settings, overrideProperty), null).ToString();
 
         /// <summary>
         /// Take a JSON string and parse it into a JsonDocument.

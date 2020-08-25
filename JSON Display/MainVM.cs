@@ -45,9 +45,9 @@ namespace JSON_Display
             set { _ShowSettingsDialog = value; OnPropertyChanged(nameof(ShowSettingsDialog)); }
         }
 
-        private CSharpSettings _CSharp;
+        private OperationSettings _CSharp;
 
-        public CSharpSettings CSharp
+        public OperationSettings CSharp
         {
             get => _CSharp;
             set { _CSharp = value; OnPropertyChanged(nameof(CSharp)); }
@@ -74,6 +74,24 @@ namespace JSON_Display
             }
         }
 
+
+        private string _SQLTableText;
+
+        public string SQLTableText
+        {
+            get => _SQLTableText;
+            set { _SQLTableText = value; OnPropertyChanged(nameof(SQLTableText)); }
+        }
+
+
+        private string _SQLTableTypeText;
+
+        public string SQLTableTypeText
+        {
+            get => _SQLTableTypeText;
+            set { _SQLTableTypeText = value; OnPropertyChanged(nameof(SQLTableTypeText)); }
+        }
+
         private double _MainFontSize;
 
         public double MainFontSize
@@ -87,7 +105,7 @@ namespace JSON_Display
 
         public MainVM()
         {
-            CSharp = new CSharpSettings();
+            CSharp = new OperationSettings();
         }
         #endregion
 

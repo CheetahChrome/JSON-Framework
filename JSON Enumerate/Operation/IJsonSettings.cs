@@ -2,11 +2,11 @@
 {
     public interface IJsonSettings
     {
+        string Name { get; set; }
         bool AddDTOSuffix { get; set; }
-
+        bool AddJsonProperty { get; set; }
+        bool AddJsonPropertyName { get; set; }
         bool AddTableTypeConstraint { get; set; }
-
         bool IsSortProperties { get; set; }
-
     }
 }

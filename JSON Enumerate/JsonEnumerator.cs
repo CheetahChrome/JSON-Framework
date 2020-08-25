@@ -81,7 +81,7 @@ namespace JSON_Enumerate
         public static P WalkProperties<P,T>(JsonProperty jp, T originParent ) where P : IProperty, new() where T : IJsonOperation, new()
         {
             var key = jp.Name.Trim();
-            var instance = new P() { Name = key };
+            var instance = new P() { Name = key, OverrideProperty = originParent.OverrideProperty };
             var jElement = jp.Value;
             instance.RawValueText = jElement.GetRawText();
 
@@ -118,7 +118,7 @@ namespace JSON_Enumerate
 
                         // Generate a sub object UserType which is named as the key
 
-                        var sub = new T() {Name = key};
+                        var sub = new T() { Name = key };
 
                         // Add it to the origin parent
                         originParent.SubClasses.Add(sub);

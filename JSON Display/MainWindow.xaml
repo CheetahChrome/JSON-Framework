@@ -63,6 +63,7 @@
         </Style>
 
         <system:Double x:Key="SlideOffSet">300</system:Double>
+        <system:Double x:Key="SlideOffSet2">400</system:Double>
 
         <Storyboard x:Key="SlideRight">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
@@ -76,6 +77,20 @@
                              Duration="0:0:0.3" />
 
         </Storyboard>
+
+        <Storyboard x:Key="SlideRight2">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="0" To="{StaticResource SlideOffSet}"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="SlideLeft2">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="{StaticResource SlideOffSet}" To="0" 
+                             Duration="0:0:0.3" />
+
+        </Storyboard>
+
 
         <Style TargetType="{x:Type StackPanel}">
             <Style.Triggers>
@@ -167,7 +182,7 @@
 
             <TabItem Header="Table Type" Width="100" Height="40">
                 <TextBox
-                    Text="{Binding TableTypeText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+                    Text="{Binding SQLTableTypeText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
             </TabItem>
 
         </TabControl>
@@ -201,11 +216,47 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center"  />
             </ToggleButton>
 
-            <Controls:Settings Width="{StaticResource SlideOffSet}" Height="150"
+            <Controls:Settings Width="{StaticResource SlideOffSet}" Height="230"
                                Panel.ZIndex="100"
                                CSharp="{Binding CSharp}" 
             />
         </StackPanel>
+
+        <StackPanel Panel.ZIndex="100" 
+                    Orientation="Horizontal" 
+                    Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,0,0" d:IsHidden="True" >
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState2}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideLeft2}" />
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideRight2}" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel.RenderTransform>
+                <TranslateTransform X="{StaticResource SlideOffSet2}" Y="0"/>
+            </StackPanel.RenderTransform>
+
+            <ToggleButton x:Name="SlideState2" Height="22" Width="22" VerticalAlignment="Top" Foreground="LightBlue" BorderThickness="0" Opacity="10" >
+
+                <Image Source="{DynamicResource diGear}" 
+                       Height="16" Width="16" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"  />
+            </ToggleButton>
+
+            <Controls:PropertyOverrides Width="{StaticResource SlideOffSet2}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+        </StackPanel>
+
+
 
     </Grid>
 

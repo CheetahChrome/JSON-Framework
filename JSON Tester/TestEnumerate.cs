@@ -7,6 +7,7 @@ using System.Linq;
 using JSON_Enumerate.Implementation;
 using JSON_Enumerate.Operation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using JSON_Display.Operation;
 
 namespace JSON_Tester
 {
@@ -23,8 +24,10 @@ namespace JSON_Tester
 
             Assert.IsNotNull(doc);
 
+            var settings = new OperationSettings() {Name = "TestName"};
+
             var instance = doc.RootElement.WalkStructure<CSharpClass, CSharpProperty>
-                (new CSharpClass("Top"), null);
+                (new CSharpClass(settings, null), null);
 
             Assert.IsNotNull(instance);
 
