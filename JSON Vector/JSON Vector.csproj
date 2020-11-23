@@ -3,25 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>JSON_Vector</RootNamespace>
-    <Version>1.2.0</Version>
+    <Version>1.3.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>2020</Copyright>
     <Description>Classes and methods to provide a transport to SQL Server when using sprocs. Can create sql parameters for user defined table types. An ORM replacement.</Description>
     <PackageIcon>Buddybleu.png</PackageIcon>
     <PackageReleaseNotes>V1.1 Initial which provides `SprocOperationsBase` and GenerateSQLParameter and ProcessThenYieldMultiples.
-V1.2 Provides `VectorDatabase` connection object which can send table type data to the database usinge `SendToDatabase`.</PackageReleaseNotes>
+V1.2 Provides `VectorDatabase` connection object which can send table type data to the database usinge `SendToDatabase`.
+V1.3 Removed MVC requirements.
+V1.3.1 - Multiple versions of .Net Standard</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Omega Technical Consulting</Company>
     <PackageId>JSONVector</PackageId>
-    <PackageTags>JSON SQLParameter</PackageTags>
+    <PackageTags>JSON SQLParameter UserTableDefinition</PackageTags>
+    <Authors>CheetahChrome</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0-preview.6.20305.6" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0-preview.6.20305.6" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0-preview.8.20407.11" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0-preview.8.20407.11" />
   </ItemGroup>
 
   <ItemGroup>

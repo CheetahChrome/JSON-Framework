@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -19,6 +20,7 @@ using JSON_Enumerate.Implementation;
 using JSONTreeView;
 using Newtonsoft.Json.Linq;
 
+
 namespace JSON_Display
 {
 
@@ -28,11 +30,35 @@ namespace JSON_Display
 
         public MainWindow()
         {
+
+            (AppDomain.CurrentDomain).UnhandledException += (s, e) =>
+                LogUnhandledException(e.ExceptionObject as Exception, nameof(AppDomain.CurrentDomain));
+
+            if (Dispatcher != null)
+                Dispatcher.UnhandledException += (s, e) =>
+                {
+                    LogUnhandledException(e.Exception, nameof(Dispatcher));
+                    e.Handled = true;
+                };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception, nameof(TaskScheduler));
+                e.SetObserved();
+            };
+
             InitializeComponent();
 
             DataContext = VM = new MainVM();
 
             LoadCommands();
+
+        }
+
+        private void LogUnhandledException(Exception exception, string v)
+        {
+            MessageBox.Show(exception.Demystify().ToString(), "JSON Framework App");
+            //   Log.Fatal(exception, v);
         }
 
         private void LoadCommands()
@@ -98,8 +124,6 @@ namespace JSON_Display
             tView.ProcessJson(parseResult.ValidJsonDoc);
 
             VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
-
-            
 
 
         }

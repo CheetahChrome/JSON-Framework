@@ -42,7 +42,8 @@ namespace JSON_Enumerate.Implementation
 
             sb.AppendLine($"}}{Environment.NewLine}");
 
-            sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
+            if (SubClasses?.Any() ?? false)
+                sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
 
 
             return sb.ToString();

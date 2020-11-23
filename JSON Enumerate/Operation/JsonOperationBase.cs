@@ -14,10 +14,18 @@ namespace JSON_Enumerate.Operation
         public ICommand OverrideProperty { get; set; }
 
         public IJsonSettings Settings { get; set; }
+
+        public string _Name;
         public string Name
         {
-            get => Settings?.Name ?? "Undefined";
-            set => throw new NotImplementedException();
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Name))
+                    _Name = Settings?.Name ?? "Undefined";
+
+                return _Name;
+            }
+            set => _Name = value;
         }
 
         public JsonOperationBase(IJsonSettings settings, ICommand overrideProperty = null) 

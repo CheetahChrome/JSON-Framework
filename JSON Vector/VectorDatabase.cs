@@ -37,11 +37,11 @@ namespace JSON_Vector
             ConnectionString = connectionString;
         }
 
-        public void SendToDatabase<T>(T itemTOSend) where T : ISprocOperationDTO
-        {
-            var item = itemTOSend ?? throw new ApplicationException("Need a valid item to send");
+        //public void SendToDatabase<T>(T itemTOSend) where T : ISprocOperationDTO
+        //{
+        //    var item = itemTOSend ?? throw new ApplicationException("Need a valid item to send");
 
-        }
+        //}
 
 
         public void SendToDatabase<T>(IList<T> listToSend) where T : class, ISprocOperationDTO, new()
