@@ -6,6 +6,11 @@
     <RootNamespace>JSON_Display</RootNamespace>
     <UseWPF>true</UseWPF>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.1.0</Version>
+    <Authors>Wiilliam Wegerson</Authors>
+    <Company>Omega Technical Solutions</Company>
+    <Copyright>2021</Copyright>
+    <PackageIcon>code-json.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +20,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSONTreeView\JSONTreeView.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Images\code-json.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,10 @@ namespace JSON_Enumerate.Implementation
         {
             var sb = new StringBuilder();
 
-            var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Settings.Name}DTO" : Name;
+            // Set our class name.
+            Name = string.IsNullOrEmpty(Settings.ClassName) ? Settings.Name : Settings.ClassName;
+
+            var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
 
             var tableTypeNumber = 0;
             sb.AppendLine($"public class {name}");

@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Text.Json;
 using JSON_Vector.Attributes;
-using JSON_Vector.Connection;
-using Newtonsoft.Json.Linq;
 using SQLJSON.Extensions;
 
 namespace JSON_Tester
