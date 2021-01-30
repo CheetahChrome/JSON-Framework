@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>A WPF package which allows for the reading in of JSON and the output the json into a treeview.</Description>

@@ -1,13 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>JSON_Display</RootNamespace>
     <UseWPF>true</UseWPF>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>1.1.1</Version>
-    <Authors>Wiilliam Wegerson</Authors>
+    <Authors>William Wegerson</Authors>
     <Company>Omega Technical Solutions</Company>
     <Copyright>2021</Copyright>
     <PackageIcon>BlueDoc.ico</PackageIcon>
@@ -16,8 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ben.Demystifier" Version="0.1.6" />
+    <PackageReference Include="Ben.Demystifier" Version="0.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Images\BlueDoc.ico">
+    <None Include="Images\code-json.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
