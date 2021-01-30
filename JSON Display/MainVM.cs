@@ -17,6 +17,7 @@ namespace JSON_Display
 
         public ICommand  JSONLoadInternal     { get; set; } 
         public ICommand JSONLoadFromClipboard { get; set; }
+        public ICommand JSONLoadFromDatabase { get; set; }
 
         public ICommand CMDSettingsShow => new OperationCommand((o) =>
             {

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JSON_Display.Controls;
 using JSON_Display.Operation;
 using JSON_Enumerate.Implementation;
 using JSONTreeView;
@@ -96,7 +97,18 @@ namespace JSON_Display
                 ? Clipboard.GetText(TextDataFormat.Text)
                 : string.Empty));
 
+            VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
         }
+
+        private void LoadFromDatabaseOperation(object ignored)
+        {
+            var lfd = new LoadFromDatabaseDialog();
+
+            lfd.ShowDialog();
+
+
+        }
+
 
         private void ShowJSON(string text)
         {
