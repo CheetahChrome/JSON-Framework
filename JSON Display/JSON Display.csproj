@@ -6,11 +6,13 @@
     <RootNamespace>JSON_Display</RootNamespace>
     <UseWPF>true</UseWPF>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Wiilliam Wegerson</Authors>
     <Company>Omega Technical Solutions</Company>
     <Copyright>2021</Copyright>
-    <PackageIcon>code-json.png</PackageIcon>
+    <PackageIcon>BlueDoc.ico</PackageIcon>
+    <ApplicationIcon>BlueDoc.ico</ApplicationIcon>
+    <AssemblyVersion>1.1.11.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Images\code-json.png">
+    <None Include="Images\BlueDoc.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
