@@ -10,7 +10,7 @@ namespace JSON_Vector.Interfaces
         //string StoredProcedureName { get; }
 
         // If the derived is a table type, then provide its name here. 
-        string TableTypeName { get; }
+        string PutTableTypeVariableName { get; }
 
         List<Tuple<string, string>> ExtractStrings();
 

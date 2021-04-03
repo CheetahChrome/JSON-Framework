@@ -12,12 +12,57 @@ using JSON_Vector.Interfaces;
 
 namespace JSON_Vector
 {
+
+    /// <summary>
+    /// This is the common base class which allows derived models to be specialized vectors
+    /// to and from the database. The derived class will overide these properties
+    /// <code>
+    ///   public override string StoredProcedureName => "[{dbSchema}].[{Stored Procedure Name}]";
+    ///   public override string TableTypeName => "budgetTT"; // This is not a table type, this does not have to be filled in.
+    /// </code>
+    /// 
+    /// To have the derived model mimic the table data, each property will be numbers from 1..n such as:
+    /// <code>
+    /// [TableType(1)]
+    /// public int EngagementId { get; set; }
+    /// 
+    /// [TableType(2)]
+    /// public string FacilityNumber { get; set; }
+    /// 
+    /// [TableType(3)]
+    /// public string FacilityName { get; set; }
+    /// </code>
+    /// 
+    /// Mark any non serialization needed property with
+    /// <code>
+    ///   [NotMapped]  // Ignored for database mapping (to db)
+    ///   [JsonIgnore] // Ignred for any deserialization/serialization code.
+    ///   public string SourceName { get; set; }
+    /// </code>
+    /// </summary>
     public class SprocOperationsBase : ISprocOperationDTO, IValidation
     {
 
         #region Variables
         private List<string> _ValidationErrors;
         private Type NotMappedType = typeof(NotMappedAttribute);
+
+        // The following two properties are to be overriden by the derived class.
+        [NotMapped]
+        public virtual string GetStoredProcedureName => string.Empty;
+
+        [NotMapped]
+        public virtual string PutStoredProcedureName => string.Empty;
+
+        [NotMapped]
+        public bool UseAlternateSproc { get; set; }
+
+        /// <summary>
+        /// This is an optional derived property which when used signifies that the derived is a tabletype and the
+        /// name of that type.
+        /// </summary>
+        [NotMapped]
+        public virtual string PutTableTypeVariableName => "TableTypeNameInvalid";
 
         /// <summary>
         /// Are we under debug mode? If so provide full error messages.
@@ -34,14 +79,8 @@ namespace JSON_Vector
         #endregion
 
         #region Properties
-        //[TableType(2)]
-        //public virtual int sourceId { get; set; }
         [NotMapped]
         public string SourceName { get; set; }
-
-        [NotMapped]
-        public virtual string TableTypeName => "TableTypeNameInvalid";
-
 
         [NotMapped]
         public int Code { get; set; }
@@ -122,7 +161,7 @@ namespace JSON_Vector
         private List<PropertyInfo> _props;
 
         [NotMapped]
-        public virtual bool UsesTableTypes { get { return false; } }
+        public virtual bool UsesTableTypes => false;
 
         [NotMapped]
         protected List<PropertyInfo> GetProperties
@@ -139,9 +178,6 @@ namespace JSON_Vector
             }
         }
 
-
-        [NotMapped]
-        public virtual string StoredProcedureName => string.Empty;
 
         public virtual List<Tuple<string, bool>> ExtractBools()
         {
@@ -215,7 +251,6 @@ namespace JSON_Vector
                                 .ToList();
         }
 
-
         public virtual List<Tuple<string, string>> ExtractStrings()
         {
             var strtype = typeof(string);
@@ -257,13 +292,13 @@ namespace JSON_Vector
             yield return null;
         }
 
-        // This is the final derivation of ExtractParameters which return a sql paramater object
-        // which encompases the data in the generated table.
+        // This is the final derivation of ExtractParameters which return a sql parameter object
+        // which encompass the data in the generated table.
         public virtual SqlParameter ExtractParameters(bool ignoreValues)
         {
             return new SqlParameter()
             {
-                ParameterName = $"@{TableTypeName}",
+                ParameterName = $"@{PutTableTypeVariableName}",
                 SqlDbType = SqlDbType.Structured,
                 Value = ProcessValuesToTable(ExtractTable(), ignoreValues)
             };
@@ -319,7 +354,7 @@ namespace JSON_Vector
         // This derivation allows for the chaining of data extraction 
         public DataTable ExtractTable()
         {
-            return new DataTable(TableTypeName);
+            return new DataTable(PutTableTypeVariableName);
         }
 
         /// <summary>
@@ -331,7 +366,7 @@ namespace JSON_Vector
         {
             return new SqlParameter()
             {
-                ParameterName = $"@{TableTypeName}",
+                ParameterName = $"@{PutTableTypeVariableName}",
                 SqlDbType = SqlDbType.Structured,
                 Value = table
             };
