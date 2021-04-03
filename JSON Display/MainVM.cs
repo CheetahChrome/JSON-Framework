@@ -15,14 +15,15 @@ namespace JSON_Display
     {
         #region Commands
 
-        public ICommand  JSONLoadInternal     { get; set; } 
+        public ICommand JSONLoadInternal     { get; set; } 
         public ICommand JSONLoadFromClipboard { get; set; }
-        public ICommand JSONLoadFromDatabase { get; set; }
+        public ICommand JSONLoadFromDatabase => new OperationCommand(LoadFromDatabase);
 
         public ICommand CMDSettingsShow => new OperationCommand((o) =>
             {
                 ShowSettingsDialog = !ShowSettingsDialog;
             }); 
+
 
         #endregion
 
@@ -111,6 +112,12 @@ namespace JSON_Display
         #endregion
 
         #region Methods
+
+        public void LoadFromDatabase(object obj)
+        {
+
+        }
+
 
         /// <summary>
         /// Raises the PropertyChanged event.

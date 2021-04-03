@@ -97,7 +97,7 @@ namespace JSON_Display
                 ? Clipboard.GetText(TextDataFormat.Text)
                 : string.Empty));
 
-            VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
+        //    VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
         }
 
         private void LoadFromDatabaseOperation(object ignored)
