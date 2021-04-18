@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\JSON Display\JSON Display.csproj" />
     <ProjectReference Include="..\JSON Enumerate\JSON Enumerate.csproj" />
-    <ProjectReference Include="..\JSON Vector\JSON Vector.csproj" />
   </ItemGroup>
 
 </Project>
