@@ -22,7 +22,7 @@ namespace JSON_Enumerate.Implementation
             var sb = new StringBuilder();
 
             // Set our class name.
-            Name = string.IsNullOrEmpty(Settings.ClassName) ? Settings.Name : Settings.ClassName;
+            Name = (Settings == null) ? "NotSet" : string.IsNullOrEmpty(Settings.ClassName) ? Settings.Name : Settings.ClassName;
 
             var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
 
