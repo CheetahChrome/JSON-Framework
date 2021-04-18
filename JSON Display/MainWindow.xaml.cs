@@ -69,7 +69,7 @@ namespace JSON_Display
                     "[{\"EngagementId\":666,\"FacilityNumber\":\"FacNumber1\",\"FacilityName\":\"FacName1\",\"CostCenterNumber\":\"CostCenterNumber1\",\"CostCenterName\":\"CostCenterName1\",\"UOSDescription\":\"UOSDESC #1\",\"BudgetedVolumeForUOS\":1.0000,\"BudgetedTotalWorkedFTEs\":2.0000,\"BudgetedTotalPaidFTEs\":3.0000,\"WHPUOS\":5.1000,\"Year\":\"2020-01-01\"},{\"EngagementId\":666,\"FacilityNumber\":\"FacNumber3\",\"FacilityName\":\"FacName3\",\"CostCenterNumber\":\"CostCenterNumber3\",\"CostCenterName\":\"CostCenterName3\",\"UOSDescription\":\"UOSDESC #2\",\"BudgetedVolumeForUOS\":5.0000,\"BudgetedTotalWorkedFTEs\":6.0000,\"BudgetedTotalPaidFTEs\":7.0000,\"WHPUOS\":8.9000,\"Year\":\"2020-01-01\"}]"
 
                     //@"[{""BatchId"":0,""AccessionChanges"":[{""LabId"":8675309,""InstanceChanges"":[{""Property"":""Note"",""ChangedTo"":""Jabberwocky"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""Instrument"",""ChangedTo"":""instrumented"",""UniqueId"":null,""SummaryInstance"":null}],""DetailChanges"":[{""Property"":""Comments"",""ChangedTo"":""2nd Comment"",""UniqueId"":null,""SummaryInstance"":null},{""Property"":""CCC"",""ChangedTo"":""XR71"",""UniqueId"":null,""SummaryInstance"":null}]}]}]"
-                        ));
+                        , "Static Data"));
 
             //                ShowJSON(@"{
             //    ""Pre"": null,
@@ -95,7 +95,8 @@ namespace JSON_Display
             VM.JSONLoadFromClipboard = new OperationCommand(o =>
             ShowJSON(Clipboard.ContainsText()
                 ? Clipboard.GetText(TextDataFormat.Text)
-                : string.Empty));
+                : string.Empty,
+                "Clipboard"));
 
         //    VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
         }
@@ -110,9 +111,11 @@ namespace JSON_Display
         }
 
 
-        private void ShowJSON(string text)
+        private void ShowJSON(string text, string source = "Root")
         {
             if (string.IsNullOrWhiteSpace(text)) return;
+
+            tView.ClearTree();
 
             SettingsSingleton.Settings = VM.CSharp;
 
@@ -120,7 +123,10 @@ namespace JSON_Display
 
             if (!parseResult.IsValid)
             {
-                tView.ProcessJson(parseResult.ErrorMessageDoc);
+                VM.JSONText = text;
+
+                tView.ProcessJson(parseResult.ErrorMessageDoc, false, source);
+
                 return;
             }
 
@@ -133,7 +139,9 @@ namespace JSON_Display
 
             VM.SQLTableTypeText = parseResult.ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
 
-            tView.ProcessJson(parseResult.ValidJsonDoc);
+            tView.ProcessJson(parseResult.ValidJsonDoc, false, source);
+
+            tView.OpenFirstItem(true);
 
             VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
 
