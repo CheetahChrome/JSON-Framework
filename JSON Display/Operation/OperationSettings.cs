@@ -27,6 +27,8 @@ namespace JSON_Display.Operation
 
         private string _Name;
 
+        public bool IsNameUndefined { get; set;  }
+
         public string Name
         {
             get => _Name;

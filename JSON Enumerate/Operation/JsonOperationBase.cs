@@ -15,17 +15,33 @@ namespace JSON_Enumerate.Operation
 
         public IJsonSettings Settings { get; set; }
 
+        public bool IsNameUndefined { get; set; }
+
         public string _Name;
         public string Name
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_Name))
-                    _Name = Settings?.Name ?? "Undefined";
+                //if (string.IsNullOrWhiteSpace(_Name))
+                //{
+                //    if (Settings != null && !string.IsNullOrWhiteSpace(Settings.Name))
+                //    {
+                //        _Name = Settings.Name;
+                //    }
+                //    else
+                //    {
+                //        _Name = "Jabberwocky";
+                //        IsNameUndefined = true;
+                //    }
+                //}
 
                 return _Name;
             }
-            set => _Name = value;
+            set
+            {
+                _Name = value;
+                IsNameUndefined = false;
+            }
         }
 
         public JsonOperationBase(IJsonSettings settings, ICommand overrideProperty = null) 
@@ -34,6 +50,7 @@ namespace JSON_Enumerate.Operation
             Settings = settings;
             Properties = new List<IProperty>();
             SubClasses = new List<IJsonOperation>();
+            IsNameUndefined = true;
         }
 
         public JsonOperationBase() { }
