@@ -10,5 +10,6 @@
         bool AddJsonPropertyName { get; set; }
         bool AddTableTypeConstraint { get; set; }
         bool IsSortProperties { get; set; }
+        bool IsNameUndefined { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace JSON_Enumerate.Operation
     {
         string Name { get; set; }
 
+        bool IsNameUndefined { get; set; }
+
         List<IProperty> Properties { get; set; }
 
         List<IJsonOperation> SubClasses { get; set; }

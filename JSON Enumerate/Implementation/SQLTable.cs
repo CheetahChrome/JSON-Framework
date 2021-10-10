@@ -59,6 +59,13 @@ namespace JSON_Enumerate.Implementation
 
             //sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
 
+            List<SQLProperty> propsList;
+
+            if (IsNameUndefined)
+            {
+                Name = Settings.Name;
+            }
+
             var id = $"{Name}Id";
             sb.AppendLine($"CREATE TABLE [{Schema}].[{Name}]");
             sb.AppendLine($"({Environment.NewLine}");
@@ -70,7 +77,10 @@ namespace JSON_Enumerate.Implementation
             if (SettingsSingleton.Settings.IsSortProperties)
                 props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
 
-            var propsList = props.ToList();
+            if (props.First().Name == id)
+                propsList = props.Skip(1).ToList();
+            else
+                propsList = props.ToList();
             
             //sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
             sb.AppendJoin(Environment.NewLine, propsList.Select(prp => prp.ToString()));

@@ -35,23 +35,29 @@ namespace JSON_Enumerate.Implementation
         public override string ToString()
         {
             var sb = new StringBuilder();
+            List<SQLProperty> propsList;
 
-            var id = $"{Name}Id";
+            // var id = $"{Name}Id";
+            if (IsNameUndefined)
+            {
+                if (Settings.IsNameUndefined == false)
+                    Name = Settings.Name;
+            }
+
             sb.AppendLine($"CREATE TYPE [{Schema}].[{Name}TT] AS TABLE");
             sb.AppendLine($"({Environment.NewLine}");
-            sb.AppendLine($"   [{id}][int] NULL,{Environment.NewLine}");
+            // sb.AppendLine($"   [{id}][int] NULL,{Environment.NewLine}");
 
             var props = Properties.Cast<SQLProperty>();
 
             if (SettingsSingleton.Settings.IsSortProperties)
                 props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
 
-            var propsList = props.ToList();
+            propsList = props.ToList();
 
             sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
 
             sb.AppendLine(")");
-
 
             return sb.ToString();
         }

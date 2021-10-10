@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 namespace JSON_Enumerate.Implementation
@@ -20,17 +21,34 @@ namespace JSON_Enumerate.Implementation
         public override string ToString()
         {
             var sb = new StringBuilder();
+            var props = Properties.Cast<CSharpProperty>();
+            var className = ExtractNameFromFirstProperty(props);
 
+
+
+            if (Settings != null) 
+            {
+                if (!string.IsNullOrWhiteSpace(Settings.ClassName))
+                    className = Settings.ClassName;
+                else
+                {
+                    Settings.ClassName = className;
+                    Settings.Name = className;
+                }
+            }
+          
             // Set our class name.
-            Name = (Settings == null) ? "NotSet" : string.IsNullOrEmpty(Settings.ClassName) ? Settings.Name : Settings.ClassName;
+            Name = className;
 
-            var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
+            if ((Settings != null) && string.IsNullOrWhiteSpace(Settings?.ClassName))
+                Settings.ClassName = Name;
+
+           var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
 
             var tableTypeNumber = 0;
             sb.AppendLine($"public class {name}");
             sb.AppendLine("{");
 
-            var props = Properties.Cast<CSharpProperty>();
 
             if (SettingsSingleton.Settings.IsSortProperties)
                 props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
@@ -50,6 +68,18 @@ namespace JSON_Enumerate.Implementation
 
 
             return sb.ToString();
+        }
+
+        private static string ExtractNameFromFirstProperty(IEnumerable<CSharpProperty> props)
+        {
+            if (!(props?.Any() ?? false))
+                return "NotOnProp";
+
+            string className;
+            var firstPropName = props.First().Name;
+
+            className = Regex.Replace(firstPropName, "id$", string.Empty, RegexOptions.IgnoreCase);
+            return className;
         }
     }
 }
