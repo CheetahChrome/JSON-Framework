@@ -91,6 +91,7 @@ namespace JSON_Display
             //    }]
             //}"));
 
+            VM.ClearResults = new OperationCommand(o => ClearAll());
 
             VM.JSONLoadFromClipboard = new OperationCommand(o =>
             ShowJSON(Clipboard.ContainsText()
@@ -110,6 +111,11 @@ namespace JSON_Display
 
         }
 
+        private void ClearAll()
+        {
+            tView.ClearTree();
+            VM.ClearAll();
+        }
 
         private void ShowJSON(string text, string source = "Root")
         {

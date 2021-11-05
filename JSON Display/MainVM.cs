@@ -19,6 +19,7 @@ namespace JSON_Display
         public ICommand JSONLoadFromClipboard { get; set; }
         public ICommand JSONLoadFromDatabase => new OperationCommand(LoadFromDatabase);
 
+        public ICommand ClearResults { get; set; }
         public ICommand CMDSettingsShow => new OperationCommand((o) =>
             {
                 ShowSettingsDialog = !ShowSettingsDialog;
@@ -125,6 +126,11 @@ namespace JSON_Display
         /// <param name="propertyName">The name of the property that has changed.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        internal void ClearAll()
+        {
+            CSharpText = JSONText = SQLTableText = SQLTableTypeText = null;
+        }
 
         #endregion
     }
