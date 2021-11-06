@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,6 +20,7 @@ namespace JSON_Display
         public ICommand JSONLoadFromClipboard { get; set; }
         public ICommand JSONLoadFromDatabase => new OperationCommand(LoadFromDatabase);
 
+        public ICommand ClearResults { get; set; }
         public ICommand CMDSettingsShow => new OperationCommand((o) =>
             {
                 ShowSettingsDialog = !ShowSettingsDialog;
@@ -101,6 +103,16 @@ namespace JSON_Display
             get => _MainFontSize;
             set { _MainFontSize = value; OnPropertyChanged(nameof(MainFontSize)); }
         }
+
+
+        private ObservableCollection<string> _RecentJsons;
+
+        public ObservableCollection<string> RecentJsons
+        {
+            get { return _RecentJsons; }
+            set { _RecentJsons = value; OnPropertyChanged(nameof(RecentJsons)); }
+        }
+
         #endregion
 
         #region Construction/Initialization
@@ -108,6 +120,7 @@ namespace JSON_Display
         public MainVM()
         {
             CSharp = new OperationSettings();
+            RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json" };
         }
         #endregion
 
@@ -125,6 +138,11 @@ namespace JSON_Display
         /// <param name="propertyName">The name of the property that has changed.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        internal void ClearAll()
+        {
+            CSharpText = JSONText = SQLTableText = SQLTableTypeText = null;
+        }
 
         #endregion
     }

@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance {x:Type local:MainVM}}"
         Title="JSON Framework App" Height="450" Width="800">
     <Window.Resources>
-
+        <local:StaticResourceConverter x:Key="StaticResourceConverter" />
         <system:Double x:Key="SlideOffSet">300</system:Double>
         <system:Double x:Key="SlideOffSet2">400</system:Double>
 
@@ -29,13 +29,13 @@
 
         <Storyboard x:Key="SlideRight2">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="0" To="{StaticResource SlideOffSet}"
+                             From="0" To="{StaticResource SlideOffSet2}"
                              Duration="0:0:0.3" />
         </Storyboard>
 
         <Storyboard x:Key="SlideLeft2">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="{StaticResource SlideOffSet}" To="0" 
+                             From="{StaticResource SlideOffSet2}" To="0" 
                              Duration="0:0:0.3" />
 
         </Storyboard>
@@ -53,6 +53,36 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Path x:Key="pNuke" Data="M14.04,12H10V11H5.5A3.5,3.5 0 0,1 2,7.5A3.5,3.5 0 0,1 5.5,4C6.53,4 7.45,4.44 8.09,5.15C8.5,3.35 10.08,2 12,2C13.92,2 15.5,3.35 15.91,5.15C16.55,4.44 17.47,4 18.5,4A3.5,3.5 0 0,1 22,7.5A3.5,3.5 0 0,1 18.5,11H14.04V12M10,16.9V15.76H5V13.76H19V15.76H14.04V16.92L20,19.08C20.58,19.29 21,19.84 21,20.5A1.5,1.5 0 0,1 19.5,22H4.5A1.5,1.5 0 0,1 3,20.5C3,19.84 3.42,19.29 4,19.08L10,16.9Z" />
+        <Style x:Key="PathStyle"
+               TargetType="{x:Type Path}">
+            <Setter Property="Stretch"
+                    Value="Uniform" />
+            <Setter Property="Data"
+                    Value="{Binding Data, Source={StaticResource pNuke}}" />
+        </Style>
+
+        <Geometry x:Key="ExpandIconPath">F1 M 30.25,58L 18,58L 18,45.75L 22,41.75L 22,50.75L 30,42.75L 33.25,46L 25.25,54L 34.25,54L 30.25,58 Z M 58,45.75L 58,58L 45.75,58L 41.75,54L 50.75,54L 42.75,46L 46,42.75L 54,50.75L 54,41.75L 58,45.75 Z M 45.75,18L 58,18L 58,30.25L 54,34.25L 54,25.25L 46,33.25L 42.75,30L 50.75,22L 41.75,22L 45.75,18 Z M 18,30.25L 18,18L 30.25,18L 34.25,22L 25.25,22L 33.25,30L 30,33.25L 22,25.25L 22,34.25L 18,30.25 Z</Geometry>
+        <Geometry x:Key="CollapseIconPath">F1 M 54.2499,34L 42,34L 42,21.7501L 45.9999,17.7501L 45.9999,26.7501L 53.9999,18.7501L 57.2499,22.0001L 49.2499,30.0001L 58.2499,30.0001L 54.2499,34 Z M 34,21.7501L 34,34L 21.75,34L 17.75,30.0001L 26.75,30.0001L 18.75,22.0001L 22,18.7501L 30,26.7501L 30,17.7501L 34,21.7501 Z M 21.75,42L 34,42L 34,54.25L 30,58.25L 30,49.25L 22,57.25L 18.75,54L 26.75,46L 17.75,46L 21.75,42 Z M 42,54.25L 42,42L 54.2499,42L 58.2499,46L 49.2499,46.0001L 57.2499,54L 53.9999,57.25L 45.9999,49.25L 45.9999,58.25L 42,54.25 Z</Geometry>
+        <Geometry x:Key="CloseIconPath">F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z</Geometry>
+
+        <!--<Image x:Key="MenuItemImage"
+               x:Shared="False"
+               Width="20"
+               Height="20">
+            <Image.Source>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <GeometryDrawing Brush="Green"
+                                         Geometry="{Binding Tag,
+                                    RelativeSource={RelativeSource AncestorType=MenuItem},
+                                    Converter={StaticResource StaticResourceConverter}}" />
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+
+            </Image.Source>
+        </Image>-->
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -60,13 +90,103 @@
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
 
-        <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0">
-            <Button ToolTip="Pull JSON From Clipboard" Height="40" Width="40" Margin="5,0,0,0" Style="{DynamicResource RoundCorner}" Command="{Binding JSONLoadFromClipboard}">
+        <Menu Height="Auto"
+              Name="menu1"
+              Grid.ColumnSpan="2"
+              Margin="20, 8, 20, 8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Top"
+              Foreground="White"
+              FontSize="16"
+              FontWeight="Bold"
+              BorderThickness="2">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0,1"
+                                     StartPoint="0,0">
+                    <GradientStop Color="#FF3A60AD"
+                                  Offset="0.528" />
+                    <GradientStop Color="#FF6A85D8"
+                                  Offset="0.01" />
+                    <GradientStop Color="#FF3464C4"
+                                  Offset="1" />
+                    <GradientStop Color="#FF202E7E"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Menu.Background>
+            
+            <Menu.BitmapEffect>
+                <DropShadowBitmapEffect />
+            </Menu.BitmapEffect>
+
+            <MenuItem Header="Clipboard Load"
+                      Foreground="Orange"
+                      FontSize="16"
+                      Margin="6"
+                      ToolTip="Load JSON From Clipboard"
+                      Command="{Binding JSONLoadFromClipboard}"
+                      FontWeight="Bold">
+                <MenuItem.Icon>
+                    <Image Source="/Assets/clipboard-arrow-down-outline.png" />
+
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Internal Load"
+                      Foreground="Orange"
+                      FontSize="16"
+                      Margin="6"
+                      ToolTip="Load Embedded JSON Example"
+                      Command="{Binding JSONLoadInternal}"
+                      FontWeight="Bold">
+                <MenuItem.Icon>
+                    <Image Source="/Assets/axis-x-rotate-counterclockwise.png" />
+
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Reload"
+                      Foreground="Purple"
+                      FontSize="16"
+                      Margin="6"
+                      FontWeight="Bold">
+                <MenuItem.Icon>
+                    <Image Source="/Assets/reload-alert.png"
+                           Height="20" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Clear"
+                      Foreground="OrangeRed"
+                      FontSize="16"
+                      Margin="6"
+                      Command="{Binding ClearResults }"
+                      FontWeight="Bold">
+                <MenuItem.Icon>
+                    <Image Source="/Assets/nuke.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Recent"
+                      Foreground="GhostWhite"
+                      FontSize="16"
+                      Margin="6"
+                      ItemsSource="{Binding Path=RecentJsons}"
+                      FontWeight="Bold">
+                <MenuItem.Icon>
+                    <Image Source="/Assets/history.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+
+        </Menu>
+
+        <!--<StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1">
+            <Button ToolTip="Pull JSON From Clipboard" Height="40" Width="40" Margin="5,0,0,0" 
+                    Style="{DynamicResource RoundCorner}" Command="{Binding JSONLoadFromClipboard}">
                 <TextBlock Text="✊"
                     FontFamily="Segoe UI Symbol"
                     Foreground="DarkGreen"
@@ -90,7 +210,17 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"  />
             </Button>
-        </StackPanel>
+            <Button Width="40"
+                    Height="40"
+                    ToolTip="Clear all"
+                    Margin="5,0,0,0"
+                    Command="{Binding ClearResults }"
+                    Style="{DynamicResource RoundCorner}"
+                    >
+                <Path Style="{StaticResource PathStyle}"
+                      Fill="Red" Margin="9" />
+            </Button>
+        </StackPanel>-->
 
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
             <Button Width="40" Height="40" ToolTip="Change Settings" Margin="0,0,10,0" Command="{Binding CMDSettingsShow}" Style="{DynamicResource RoundCorner}">
@@ -144,7 +274,7 @@
 
         <StackPanel Panel.ZIndex="99" 
                     Orientation="Horizontal" 
-                    Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" 
+                    Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" 
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" >
             <StackPanel.Resources>
                 <Style TargetType="{x:Type StackPanel}">
@@ -164,7 +294,21 @@
                 <TranslateTransform X="{StaticResource SlideOffSet}" Y="0"/>
             </StackPanel.RenderTransform>
 
-            <ToggleButton x:Name="SlideState" Height="22" Width="22" VerticalAlignment="Top" Foreground="LightBlue" BorderThickness="0" Opacity="10" >
+            <ToggleButton x:Name="SlideState" Height="22" Width="22" VerticalAlignment="Top" Foreground="White" BorderThickness="0" Opacity="10" >
+                <ToggleButton.Background>
+                    <LinearGradientBrush EndPoint="0,1"
+                                         StartPoint="0,0">
+                        <GradientStop Color="#FF3A60AD"
+                                      Offset="0.528" />
+                        <GradientStop Color="#FF6A85D8"
+                                      Offset="0.01" />
+                        <GradientStop Color="#FF3464C4"
+                                      Offset="1" />
+                        <GradientStop Color="#FF202E7E"
+                                      Offset="1" />
+                    </LinearGradientBrush>
+                </ToggleButton.Background>
+
                 <Image Source="{DynamicResource diCSharp}" 
                            Height="16" Width="16" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"  />
@@ -178,7 +322,7 @@
 
         <StackPanel Panel.ZIndex="100" 
                     Orientation="Horizontal" 
-                    Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" 
+                    Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" 
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,0,0" d:IsHidden="True" >
             <StackPanel.Resources>
                 <Style TargetType="{x:Type StackPanel}">
@@ -209,8 +353,6 @@
 
 
         </StackPanel>
-
-
 
     </Grid>
 
