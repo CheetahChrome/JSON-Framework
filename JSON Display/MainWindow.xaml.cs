@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -164,5 +167,23 @@ namespace JSON_Display
                 change = 8;
             VM.MainFontSize = change;
         }
+
+    
+
     }
+
+
+    public class StaticResourceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) 
+            => value == DependencyProperty.UnsetValue || value == null
+                ? DependencyProperty.UnsetValue
+                : Application.Current.MainWindow.Resources[value];
+
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) 
+            => throw new NotSupportedException("INTERNAL WPF GUI ISSUE");
+
+    }
+
 }

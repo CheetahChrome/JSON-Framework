@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -102,6 +103,16 @@ namespace JSON_Display
             get => _MainFontSize;
             set { _MainFontSize = value; OnPropertyChanged(nameof(MainFontSize)); }
         }
+
+
+        private ObservableCollection<string> _RecentJsons;
+
+        public ObservableCollection<string> RecentJsons
+        {
+            get { return _RecentJsons; }
+            set { _RecentJsons = value; OnPropertyChanged(nameof(RecentJsons)); }
+        }
+
         #endregion
 
         #region Construction/Initialization
@@ -109,6 +120,7 @@ namespace JSON_Display
         public MainVM()
         {
             CSharp = new OperationSettings();
+            RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json" };
         }
         #endregion
 
