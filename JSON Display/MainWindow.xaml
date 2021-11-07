@@ -1,4 +1,4 @@
-﻿<Window xmlns:Controls="clr-namespace:JSON_Display.Controls"  
+﻿<Window xmlns:Controls="clr-namespace:JSON_Display.Controls"
         x:Class="JSON_Display.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,12 +7,14 @@
         xmlns:local="clr-namespace:JSON_Display"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance {x:Type local:MainVM}}"    
+        d:DataContext="{d:DesignInstance {x:Type local:MainVM}}"
         AllowDrop="True"
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="JSON Framework App" Height="450" Width="800">
+        Title="JSON Framework App"
+        Height="450"
+        Width="800">
     <Window.Resources>
         <local:StaticResourceConverter x:Key="StaticResourceConverter" />
         <system:Double x:Key="SlideOffSet">300</system:Double>
@@ -20,25 +22,29 @@
 
         <Storyboard x:Key="SlideRight">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="0" To="{StaticResource SlideOffSet}"
+                             From="0"
+                             To="{StaticResource SlideOffSet}"
                              Duration="0:0:0.3" />
         </Storyboard>
 
         <Storyboard x:Key="SlideLeft">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="{StaticResource SlideOffSet}" To="0" 
+                             From="{StaticResource SlideOffSet}"
+                             To="0"
                              Duration="0:0:0.3" />
         </Storyboard>
 
         <Storyboard x:Key="SlideRight2">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="0" To="{StaticResource SlideOffSet2}"
+                             From="0"
+                             To="{StaticResource SlideOffSet2}"
                              Duration="0:0:0.3" />
         </Storyboard>
 
         <Storyboard x:Key="SlideLeft2">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                             From="{StaticResource SlideOffSet2}" To="0" 
+                             From="{StaticResource SlideOffSet2}"
+                             To="0"
                              Duration="0:0:0.3" />
 
         </Storyboard>
@@ -46,7 +52,8 @@
 
         <Style TargetType="{x:Type StackPanel}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ShowSettingsDialog}" Value="True">
+                <DataTrigger Binding="{Binding ShowSettingsDialog}"
+                             Value="True">
                     <DataTrigger.EnterActions>
                         <BeginStoryboard Storyboard="{StaticResource SlideLeft}" />
                     </DataTrigger.EnterActions>
@@ -56,7 +63,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Path x:Key="pNuke" Data="M14.04,12H10V11H5.5A3.5,3.5 0 0,1 2,7.5A3.5,3.5 0 0,1 5.5,4C6.53,4 7.45,4.44 8.09,5.15C8.5,3.35 10.08,2 12,2C13.92,2 15.5,3.35 15.91,5.15C16.55,4.44 17.47,4 18.5,4A3.5,3.5 0 0,1 22,7.5A3.5,3.5 0 0,1 18.5,11H14.04V12M10,16.9V15.76H5V13.76H19V15.76H14.04V16.92L20,19.08C20.58,19.29 21,19.84 21,20.5A1.5,1.5 0 0,1 19.5,22H4.5A1.5,1.5 0 0,1 3,20.5C3,19.84 3.42,19.29 4,19.08L10,16.9Z" />
+        <Path x:Key="pNuke"
+              Data="M14.04,12H10V11H5.5A3.5,3.5 0 0,1 2,7.5A3.5,3.5 0 0,1 5.5,4C6.53,4 7.45,4.44 8.09,5.15C8.5,3.35 10.08,2 12,2C13.92,2 15.5,3.35 15.91,5.15C16.55,4.44 17.47,4 18.5,4A3.5,3.5 0 0,1 22,7.5A3.5,3.5 0 0,1 18.5,11H14.04V12M10,16.9V15.76H5V13.76H19V15.76H14.04V16.92L20,19.08C20.58,19.29 21,19.84 21,20.5A1.5,1.5 0 0,1 19.5,22H4.5A1.5,1.5 0 0,1 3,20.5C3,19.84 3.42,19.29 4,19.08L10,16.9Z" />
         <Style x:Key="PathStyle"
                TargetType="{x:Type Path}">
             <Setter Property="Stretch"
@@ -85,37 +93,15 @@
 
             </Image.Source>
         </Image>-->
-<LinearGradientBrush x:Key="MenuBackroundBrush" 
-                        EndPoint="0,1"
-                        StartPoint="0,0">
-    <GradientStop Color="#FF3A60AD"
-                    Offset="0.528" />
-    <GradientStop Color="#FF6A85D8"
-                    Offset="0.01" />
-    <GradientStop Color="#FF3464C4"
-                    Offset="1" />
-    <GradientStop Color="#FF202E7E"
-                    Offset="1" />
-</LinearGradientBrush>
-        
-<Style TargetType="Menu">
-    <Setter Property="Background"
-            Value="{StaticResource MenuBackroundBrush}" />
-</Style>
-
-<Style TargetType="MenuItem">
-    <Setter Property="Background"
-            Value="{StaticResource MenuBackroundBrush}" />
-</Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Menu Height="Auto"
@@ -127,34 +113,31 @@
               Foreground="Transparent"
               FontSize="16"
               FontWeight="Bold"
-              BorderThickness="2"
-              >
-<Menu.Resources>
-    <Style TargetType="Popup">
-        <Setter Property="AllowsTransparency"
-                Value="True" />
-    </Style>
-    <Style TargetType="ScrollViewer">
-        <Setter Property="Background"
-                Value="Green" />
-    </Style>
+              BorderThickness="2">
+            <Menu.Resources>
+                <LinearGradientBrush x:Key="MenuBackroundBrush"
+                                     EndPoint="0,1"
+                                     StartPoint="0,0">
+                    <GradientStop Color="#FF3A60AD"
+                                  Offset="0.528" />
+                    <GradientStop Color="#FF6A85D8"
+                                  Offset="0.01" />
+                    <GradientStop Color="#FF3464C4"
+                                  Offset="1" />
+                    <GradientStop Color="#FF202E7E"
+                                  Offset="1" />
+                </LinearGradientBrush>
 
-    <Style TargetType="StackPanel">
-        <Setter Property="Background"
-                Value="Firebrick" />
-    </Style>
+                <Style TargetType="Menu">
+                    <Setter Property="Background"
+                            Value="{StaticResource MenuBackroundBrush}" />
+                </Style>
 
-    <Style TargetType="Border">
-        <Setter Property="Background"
-                Value="Firebrick" />
-    </Style>   
-
-    <SolidColorBrush x:Key="MenuPopuBrush"
-                        Color="Firebrick" />
-    <SolidColorBrush x:Key=" BorderMediumColor"
-                        Color="Firebrick" />
-          
-</Menu.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Background"
+                            Value="{StaticResource MenuBackroundBrush}" />
+                </Style>
+            </Menu.Resources>
             <Menu.BitmapEffect>
                 <DropShadowBitmapEffect />
             </Menu.BitmapEffect>
@@ -205,7 +188,7 @@
                     <Image Source="/Assets/nuke.png" />
                 </MenuItem.Icon>
             </MenuItem>
-
+            <!--Example ot have submenus bound-->
             <MenuItem Header="Recent"
                       Foreground="GhostWhite"
                       FontSize="16"
@@ -215,6 +198,7 @@
                 <MenuItem.Icon>
                     <Image Source="/Assets/history.png" />
                 </MenuItem.Icon>
+                <!--Handle the gray Popup background-->
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
                         <Border Name="Border">
@@ -230,7 +214,7 @@
                                        PopupAnimation="Fade">
                                     <Border Name="SubmenuBorder"
                                             SnapsToDevicePixels="True"
-                                            Background="LightGray"
+                                            Background="LightBlue"
                                             BorderBrush="Transparent"
                                             BorderThickness="1">
                                         <StackPanel IsItemsHost="True"
@@ -250,7 +234,7 @@
                                      Value="true">
                                 <Setter TargetName="Border"
                                         Property="Background"
-                                        Value="LightGray" />
+                                        Value="LightBlue" />
                                 <Setter TargetName="Border"
                                         Property="BorderBrush"
                                         Value="Transparent" />
@@ -327,15 +311,25 @@
                 <Image Source="{DynamicResource diGear}" Height="22" Width="22" HorizontalAlignment="Center" VerticalAlignment="Center"  />
             </Button>
         </StackPanel>-->
-        
-        <TabControl Grid.Row="1" Margin="4,4,4,4" TabStripPlacement="Left"  FontFamily="Consolas" FontSize="14" Grid.ColumnSpan="2" >
+
+        <TabControl Grid.Row="1"
+                    Margin="4,4,4,4"
+                    TabStripPlacement="Left"
+                    FontFamily="Consolas"
+                    FontSize="14"
+                    Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="TextWrapping" Value="Wrap"/>
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalAlignment" Value="Stretch"/>
-                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                    <Setter Property="TextWrapping"
+                            Value="Wrap" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Stretch" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Stretch" />
+                    <Setter Property="BorderThickness"
+                            Value="0" />
 
                 </Style>
             </TabControl.Resources>
@@ -349,37 +343,60 @@
                 </Style>
             </TabControl.ItemContainerStyle>
 
-            <TabItem Header="Tree" Width="100" Height="40">
-                <TreeView x:Name="tView"  HorizontalAlignment="Stretch" FontSize="{Binding MainFontSize}" PreviewMouseWheel="MouseWheelScroll" />
+            <TabItem Header="Tree"
+                     Width="100"
+                     Height="40">
+                <TreeView x:Name="tView"
+                          HorizontalAlignment="Stretch"
+                          FontSize="{Binding MainFontSize}"
+                          PreviewMouseWheel="MouseWheelScroll" />
             </TabItem>
-            <TabItem Header="Text" Width="100" Height="40">
-                <TextBox Text="{Binding JSONText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            <TabItem Header="Text"
+                     Width="100"
+                     Height="40">
+                <TextBox Text="{Binding JSONText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
             </TabItem>
-            <TabItem Header="C#" Width="100" Height="40">
-                <TextBox
-                     Text="{Binding CSharpText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            <TabItem Header="C#"
+                     Width="100"
+                     Height="40">
+                <TextBox Text="{Binding CSharpText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
             </TabItem>
 
-            <TabItem Header="SQL Table" Width="100" Height="40">
-                <TextBox
-                    Text="{Binding SQLTableText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            <TabItem Header="SQL Table"
+                     Width="100"
+                     Height="40">
+                <TextBox Text="{Binding SQLTableText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
             </TabItem>
 
-            <TabItem Header="Table Type" Width="100" Height="40">
-                <TextBox
-                    Text="{Binding SQLTableTypeText}" PreviewMouseWheel="MouseWheelScroll" FontSize="{Binding MainFontSize}" />
+            <TabItem Header="Table Type"
+                     Width="100"
+                     Height="40">
+                <TextBox Text="{Binding SQLTableTypeText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
             </TabItem>
 
         </TabControl>
 
-        <StackPanel Panel.ZIndex="99" 
-                    Orientation="Horizontal" 
-                    Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" 
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" >
+        <StackPanel Panel.ZIndex="99"
+                    Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,4,0,0">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type StackPanel}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState}" Value="True">
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState}"
+                                     Value="True">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource SlideLeft}" />
                             </DataTrigger.EnterActions>
@@ -391,10 +408,17 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel.RenderTransform>
-                <TranslateTransform X="{StaticResource SlideOffSet}" Y="0"/>
+                <TranslateTransform X="{StaticResource SlideOffSet}"
+                                    Y="0" />
             </StackPanel.RenderTransform>
 
-            <ToggleButton x:Name="SlideState" Height="22" Width="22" VerticalAlignment="Top" Foreground="White" BorderThickness="0" Opacity="10" >
+            <ToggleButton x:Name="SlideState"
+                          Height="22"
+                          Width="22"
+                          VerticalAlignment="Top"
+                          Foreground="White"
+                          BorderThickness="0"
+                          Opacity="10">
                 <ToggleButton.Background>
                     <LinearGradientBrush EndPoint="0,1"
                                          StartPoint="0,0">
@@ -409,25 +433,33 @@
                     </LinearGradientBrush>
                 </ToggleButton.Background>
 
-                <Image Source="{DynamicResource diCSharp}" 
-                           Height="16" Width="16" 
-                           HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                <Image Source="{DynamicResource diCSharp}"
+                       Height="16"
+                       Width="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
             </ToggleButton>
 
-            <Controls:Settings Width="{StaticResource SlideOffSet}" Height="230"
+            <Controls:Settings Width="{StaticResource SlideOffSet}"
+                               Height="230"
                                Panel.ZIndex="100"
-                               CSharp="{Binding CSharp}" 
-            />
+                               CSharp="{Binding CSharp}" />
         </StackPanel>
 
-        <StackPanel Panel.ZIndex="100" 
-                    Orientation="Horizontal" 
-                    Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" 
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,0,0" d:IsHidden="True" >
+        <StackPanel Panel.ZIndex="100"
+                    Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,30,0,0"
+                    d:IsHidden="True">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type StackPanel}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState2}" Value="True">
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState2}"
+                                     Value="True">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource SlideLeft2}" />
                             </DataTrigger.EnterActions>
@@ -439,14 +471,23 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel.RenderTransform>
-                <TranslateTransform X="{StaticResource SlideOffSet2}" Y="0"/>
+                <TranslateTransform X="{StaticResource SlideOffSet2}"
+                                    Y="0" />
             </StackPanel.RenderTransform>
 
-            <ToggleButton x:Name="SlideState2" Height="22" Width="22" VerticalAlignment="Top" Foreground="LightBlue" BorderThickness="0" Opacity="10" >
+            <ToggleButton x:Name="SlideState2"
+                          Height="22"
+                          Width="22"
+                          VerticalAlignment="Top"
+                          Foreground="LightBlue"
+                          BorderThickness="0"
+                          Opacity="10">
 
-                <Image Source="{DynamicResource diGear}" 
-                       Height="16" Width="16" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                <Image Source="{DynamicResource diGear}"
+                       Height="16"
+                       Width="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
             </ToggleButton>
 
             <Controls:PropertyOverrides Width="{StaticResource SlideOffSet2}"

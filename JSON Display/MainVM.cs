@@ -87,7 +87,6 @@ namespace JSON_Display
             set { _SQLTableText = value; OnPropertyChanged(nameof(SQLTableText)); }
         }
 
-
         private string _SQLTableTypeText;
 
         public string SQLTableTypeText
@@ -103,7 +102,6 @@ namespace JSON_Display
             get => _MainFontSize;
             set { _MainFontSize = value; OnPropertyChanged(nameof(MainFontSize)); }
         }
-
 
         private ObservableCollection<string> _RecentJsons;
 

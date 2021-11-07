@@ -157,51 +157,51 @@ namespace JSON_Display
 
         }
 
-        private void MouseWheelScroll(object sender, MouseWheelEventArgs e)
-        {
-            if (Keyboard.Modifiers != ModifierKeys.Control)
-                return;
-            var delta = (e.Delta > 0) ? 2 : -2;
-            var change = VM.MainFontSize + delta;
-            if (change < 8)
-                change = 8;
-            VM.MainFontSize = change;
-        }
+    private void MouseWheelScroll(object sender, MouseWheelEventArgs e)
+    {
+        if (Keyboard.Modifiers != ModifierKeys.Control)
+            return;
+        var delta = (e.Delta > 0) ? 2 : -2;
+        var change = VM.MainFontSize + delta;
+        if (change < 8)
+            change = 8;
+        VM.MainFontSize = change;
+    }
 
-        private void DNDEnter(object sender, DragEventArgs e)
-        {
-                if (!e.Data.GetDataPresent(DataFormats.FileDrop) ||
-        sender == e.Source)
-                {
-                    e.Effects = DragDropEffects.None;
-                }
-        }
-
-        private void DragFeedback(object sender, GiveFeedbackEventArgs e)
-        {
-            base.OnGiveFeedback(e);
-            Mouse.SetCursor(Cursors.Cross);
-        }
-
-        private void DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
+    private void DNDEnter(object sender, DragEventArgs e)
+    {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop) ||
+    sender == e.Source)
             {
-                string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+                e.Effects = DragDropEffects.None;
+            }
+    }
 
-                foreach (var file in droppedFilePaths)
-                {
+    private void DragFeedback(object sender, GiveFeedbackEventArgs e)
+    {
+        base.OnGiveFeedback(e);
+        Mouse.SetCursor(Cursors.Cross);
+    }
+
+    private void DragDrop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
+        {
+            string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+
+            foreach (var file in droppedFilePaths)
+            {
                     
-                    var name = System.IO.Path.GetFileName(file);
+                var name = System.IO.Path.GetFileName(file);
 
-                    this.Title = name;
+                this.Title = name;
 
-                    ShowJSON(File.ReadAllText(file));
+                ShowJSON(File.ReadAllText(file));
 
-                }
             }
         }
     }
+}
 
 
     public class StaticResourceConverter : IValueConverter
