@@ -112,7 +112,6 @@ namespace JSON_Display
 
             lfd.ShowDialog();
 
-
         }
 
         private void ClearAll()
@@ -169,8 +168,39 @@ namespace JSON_Display
             VM.MainFontSize = change;
         }
 
-    
+        private void DNDEnter(object sender, DragEventArgs e)
+        {
+                if (!e.Data.GetDataPresent(DataFormats.FileDrop) ||
+        sender == e.Source)
+                {
+                    e.Effects = DragDropEffects.None;
+                }
+        }
 
+        private void DragFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            base.OnGiveFeedback(e);
+            Mouse.SetCursor(Cursors.Cross);
+        }
+
+        private void DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
+            {
+                string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+
+                foreach (var file in droppedFilePaths)
+                {
+                    
+                    var name = System.IO.Path.GetFileName(file);
+
+                    this.Title = name;
+
+                    ShowJSON(File.ReadAllText(file));
+
+                }
+            }
+        }
     }
 
 
