@@ -62,6 +62,7 @@ namespace JSON_Display
         private void LogUnhandledException(Exception exception, string v)
         {
             MessageBox.Show(exception.Demystify().ToString(), "JSON Framework App");
+            Application.Current.Shutdown();
             //   Log.Fatal(exception, v);
         }
 

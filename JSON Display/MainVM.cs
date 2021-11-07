@@ -120,7 +120,7 @@ namespace JSON_Display
         public MainVM()
         {
             CSharp = new OperationSettings();
-            RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json" };
+            RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json", @"C:\Temp\Full.Json" };
         }
         #endregion
 

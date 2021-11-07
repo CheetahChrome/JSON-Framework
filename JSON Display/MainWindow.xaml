@@ -1,4 +1,5 @@
-﻿<Window xmlns:Controls="clr-namespace:JSON_Display.Controls"  x:Class="JSON_Display.MainWindow"
+﻿<Window xmlns:Controls="clr-namespace:JSON_Display.Controls"  
+        x:Class="JSON_Display.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +7,6 @@
         xmlns:local="clr-namespace:JSON_Display"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        
         d:DataContext="{d:DesignInstance {x:Type local:MainVM}}"
         Title="JSON Framework App" Height="450" Width="800">
     <Window.Resources>
@@ -24,7 +24,6 @@
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                              From="{StaticResource SlideOffSet}" To="0" 
                              Duration="0:0:0.3" />
-
         </Storyboard>
 
         <Storyboard x:Key="SlideRight2">
@@ -82,7 +81,28 @@
 
             </Image.Source>
         </Image>-->
+<LinearGradientBrush x:Key="MenuBackroundBrush" 
+                        EndPoint="0,1"
+                        StartPoint="0,0">
+    <GradientStop Color="#FF3A60AD"
+                    Offset="0.528" />
+    <GradientStop Color="#FF6A85D8"
+                    Offset="0.01" />
+    <GradientStop Color="#FF3464C4"
+                    Offset="1" />
+    <GradientStop Color="#FF202E7E"
+                    Offset="1" />
+</LinearGradientBrush>
+        
+<Style TargetType="Menu">
+    <Setter Property="Background"
+            Value="{StaticResource MenuBackroundBrush}" />
+</Style>
 
+<Style TargetType="MenuItem">
+    <Setter Property="Background"
+            Value="{StaticResource MenuBackroundBrush}" />
+</Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -100,24 +120,37 @@
               Margin="20, 8, 20, 8"
               HorizontalAlignment="Stretch"
               VerticalAlignment="Top"
-              Foreground="White"
+              Foreground="Transparent"
               FontSize="16"
               FontWeight="Bold"
-              BorderThickness="2">
-            <Menu.Background>
-                <LinearGradientBrush EndPoint="0,1"
-                                     StartPoint="0,0">
-                    <GradientStop Color="#FF3A60AD"
-                                  Offset="0.528" />
-                    <GradientStop Color="#FF6A85D8"
-                                  Offset="0.01" />
-                    <GradientStop Color="#FF3464C4"
-                                  Offset="1" />
-                    <GradientStop Color="#FF202E7E"
-                                  Offset="1" />
-                </LinearGradientBrush>
-            </Menu.Background>
-            
+              BorderThickness="2"
+              >
+<Menu.Resources>
+    <Style TargetType="Popup">
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+    </Style>
+    <Style TargetType="ScrollViewer">
+        <Setter Property="Background"
+                Value="Green" />
+    </Style>
+
+    <Style TargetType="StackPanel">
+        <Setter Property="Background"
+                Value="Firebrick" />
+    </Style>
+
+    <Style TargetType="Border">
+        <Setter Property="Background"
+                Value="Firebrick" />
+    </Style>   
+
+    <SolidColorBrush x:Key="MenuPopuBrush"
+                        Color="Firebrick" />
+    <SolidColorBrush x:Key=" BorderMediumColor"
+                        Color="Firebrick" />
+          
+</Menu.Resources>
             <Menu.BitmapEffect>
                 <DropShadowBitmapEffect />
             </Menu.BitmapEffect>
@@ -131,7 +164,6 @@
                       FontWeight="Bold">
                 <MenuItem.Icon>
                     <Image Source="/Assets/clipboard-arrow-down-outline.png" />
-
                 </MenuItem.Icon>
             </MenuItem>
 
@@ -179,8 +211,72 @@
                 <MenuItem.Icon>
                     <Image Source="/Assets/history.png" />
                 </MenuItem.Icon>
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border Name="Border">
+                            <Grid>
+                                <ContentPresenter Margin="6,3,6,3"
+                                                  ContentSource="Header"
+                                                  RecognizesAccessKey="True" />
+                                <Popup Name="Popup"
+                                       Placement="Bottom"
+                                       IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       PopupAnimation="Fade">
+                                    <Border Name="SubmenuBorder"
+                                            SnapsToDevicePixels="True"
+                                            Background="LightGray"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="1">
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSuspendingPopupAnimation"
+                                     Value="true">
+                                <Setter TargetName="Popup"
+                                        Property="PopupAnimation"
+                                        Value="None" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted"
+                                     Value="true">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="LightGray" />
+                                <Setter TargetName="Border"
+                                        Property="BorderBrush"
+                                        Value="Transparent" />
+                                <Setter Property="Foreground"
+                                        Value="Firebrick" />
+                            </Trigger>
+                            <Trigger  Property="IsHighlighted"
+                                      Value="False">
+                                <Setter Property="Foreground"
+                                        Value="Black" />
+                            </Trigger>
+                            <Trigger SourceName="Popup"
+                                     Property="Popup.AllowsTransparency"
+                                     Value="True">
+                                <Setter TargetName="SubmenuBorder"
+                                        Property="CornerRadius"
+                                        Value="0,0,4,4" />
+                                <Setter TargetName="SubmenuBorder"
+                                        Property="Padding"
+                                        Value="0,0,0,3" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="Foreground"
+                                        Value="DarkGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </MenuItem.Template>
             </MenuItem>
-
 
         </Menu>
 
@@ -349,8 +445,9 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center"  />
             </ToggleButton>
 
-            <Controls:PropertyOverrides Width="{StaticResource SlideOffSet2}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
+            <Controls:PropertyOverrides Width="{StaticResource SlideOffSet2}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
 
         </StackPanel>
 

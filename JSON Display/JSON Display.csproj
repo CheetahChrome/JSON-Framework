@@ -6,7 +6,7 @@
     <RootNamespace>JSON_Display</RootNamespace>
     <UseWPF>true</UseWPF>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.1.1</Version>
+    <Version>1.2</Version>
     <Authors>William Wegerson</Authors>
     <Company>Omega Technical Solutions</Company>
     <Copyright>2021</Copyright>
@@ -32,9 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ben.Demystifier" Version="0.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
   <ItemGroup>
