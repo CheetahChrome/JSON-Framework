@@ -17,6 +17,8 @@ namespace JSON_Enumerate.Operation
 
         public bool IsNameUndefined { get; set; }
 
+        public bool IsSubClass {  get; set; }
+
         public string _Name;
         public string Name
         {

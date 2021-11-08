@@ -12,6 +12,8 @@ namespace JSON_Enumerate.Operation
 
         bool IsNameUndefined { get; set; }
 
+        bool IsSubClass { get; set; }
+
         List<IProperty> Properties { get; set; }
 
         List<IJsonOperation> SubClasses { get; set; }

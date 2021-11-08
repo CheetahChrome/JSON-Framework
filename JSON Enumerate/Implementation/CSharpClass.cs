@@ -22,11 +22,12 @@ namespace JSON_Enumerate.Implementation
         {
             var sb = new StringBuilder();
             var props = Properties.Cast<CSharpProperty>();
-            var className = ExtractNameFromFirstProperty(props);
+            var className = string.IsNullOrWhiteSpace(Name)
+                          ? ExtractNameFromFirstProperty(props)
+                          : Name;
 
-
-
-            if (Settings != null) 
+            // Top level can get and set override, but subclasses need their given name.
+            if (!IsSubClass && Settings != null) 
             {
                 if (!string.IsNullOrWhiteSpace(Settings.ClassName))
                     className = Settings.ClassName;

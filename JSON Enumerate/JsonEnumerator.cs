@@ -118,7 +118,7 @@ namespace JSON_Enumerate
 
                         // Generate a sub object UserType which is named as the key
 
-                        var sub = new T() { Name = key };
+                        var sub = new T() { Name = key, IsSubClass = true };
 
                         // Add it to the origin parent
                         originParent.SubClasses.Add(sub);
