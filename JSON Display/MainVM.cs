@@ -7,8 +7,11 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
+using JSON_Display.Models;
 using JSON_Display.Operation;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using System.Linq;
 
 namespace JSON_Display
 {
@@ -40,6 +43,14 @@ namespace JSON_Display
 
         #region Properties
 
+
+private ObservableCollection<MRU> _MRUS;
+
+public ObservableCollection<MRU> MRUS
+{
+    get { return _MRUS; }
+    set { _MRUS = value; OnPropertyChanged(nameof(MRUS)); }
+}
 
         private bool _ShowSettingsDialog;
 
@@ -111,6 +122,20 @@ namespace JSON_Display
             set { _RecentJsons = value; OnPropertyChanged(nameof(RecentJsons)); }
         }
 
+        private string _Error;
+
+        public string Error
+        {
+            get => _Error;
+            set { _Error = value; OnPropertyChanged(nameof(Error)); OnPropertyChanged(nameof(HasError)); }
+        }
+
+        public bool HasError => !string.IsNullOrEmpty(Error);
+
+        // Nuget on using Microsoft.Expression.Interactivity.Core; for ICommand
+        public ICommand ClearError => new OperationCommand((_) => { Error = string.Empty; });
+        public ICommand ErrorCopyToClipboard { get; set; }
+
         #endregion
 
         #region Construction/Initialization
@@ -119,6 +144,7 @@ namespace JSON_Display
         {
             CSharp = new OperationSettings();
             RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json", @"C:\Temp\Full.Json" };
+            MRUS = new ObservableCollection<MRU>(GetMRUS());
         }
         #endregion
 
@@ -129,6 +155,36 @@ namespace JSON_Display
 
         }
 
+        public List<MRU> GetMRUS()
+        {
+            try
+            {
+                var mruText = Properties.Settings.Default.MRUS;
+                return string.IsNullOrWhiteSpace(mruText) ? new List<MRU>()
+                    : JsonSerializer.Deserialize<List<MRU>>(mruText);
+            }
+            catch (Exception ex)
+            {
+                Error = ex.ToStringDemystified();
+            }
+
+            return null;
+        }
+
+        public void AddMRUToUserSettings(MRU mRU)
+        {
+            try
+            {
+                MRUS.Add(mRU);
+                var asList = MRUS.ToList<MRU>();
+                Properties.Settings.Default.MRUS = JsonSerializer.Serialize(asList);
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Demystify().ToString();
+            }        
+        }
 
         /// <summary>
         /// Raises the PropertyChanged event.

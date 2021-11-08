@@ -16,6 +16,7 @@
         Height="450"
         Width="800">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         <local:StaticResourceConverter x:Key="StaticResourceConverter" />
         <system:Double x:Key="SlideOffSet">300</system:Double>
         <system:Double x:Key="SlideOffSet2">400</system:Double>
@@ -102,6 +103,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <Menu Height="Auto"
@@ -190,11 +192,12 @@
             </MenuItem>
             <!--Example ot have submenus bound-->
             <MenuItem Header="Recent"
-                      Foreground="GhostWhite"
-                      FontSize="16"
-                      Margin="6"
-                      ItemsSource="{Binding Path=RecentJsons}"
-                      FontWeight="Bold">
+                Foreground="GhostWhite"
+                FontSize="16"
+                Margin="6"
+                Click="SelectMRU"
+                ItemsSource="{Binding Path=MRUS}"
+                FontWeight="Bold">
                 <MenuItem.Icon>
                     <Image Source="/Assets/history.png" />
                 </MenuItem.Icon>
@@ -264,6 +267,12 @@
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </MenuItem.Template>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Tag"
+                                Value="{Binding}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
             </MenuItem>
 
         </Menu>
@@ -496,6 +505,60 @@
 
         </StackPanel>
 
-    </Grid>
+        <Grid x:Name="ErrorBoxSection"
+              Grid.Row="2"
+              Grid.ColumnSpan="1"
+              Margin="20"
+              Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibility}}">
+            <Border BorderBrush="Black"
+                    BorderThickness="1"
+                    Background="White"
+                    d:IsHidden="True">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="2" />
+                </Border.Effect>
+            </Border>
 
+            <Border BorderBrush="DarkRed"
+                    BorderThickness=".5"
+                    x:Name="BorderError">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top"
+                            HorizontalAlignment="Right"
+                            Command="{Binding ClearError}"
+                            Margin="0,4,4,0"
+                            BorderThickness="0"
+                            Background="Transparent">
+                        <Image Height="16"
+                               Width="16"
+                               Source="Assets/Close.png" />
+                    </Button>
+                    <TextBlock  x:Name="ErrorBox"
+                                TextWrapping="Wrap"
+                                Margin="12, -12, 12, 12"
+                                Foreground="Red"
+                                Text="{Binding Error}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding ErrorCopyToClipboard}"
+                                          Header="Copy To Clipboard">
+                                    <MenuItem.Icon>
+                                        <Image Source="assets/check_green.png"
+                                               Height="16" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding ClearError}"
+                                          Header="Close">
+                                    <MenuItem.Icon>
+                                        <Image Source="assets/close.png"
+                                               Height="16" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
 </Window>
