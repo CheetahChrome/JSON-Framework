@@ -60,9 +60,9 @@ namespace JSON_Display
 
         }
 
-        private void LogUnhandledException(Exception exception, string v)
+        private static void LogUnhandledException(Exception exception, string v)
         {
-            MessageBox.Show(exception.Demystify().ToString(), "JSON Framework App");
+            MessageBox.Show(exception.Demystify().ToString(), $"JSON Framework App ({v})");
             Application.Current.Shutdown();
             //   Log.Fatal(exception, v);
         }
@@ -113,7 +113,7 @@ namespace JSON_Display
             //    VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
         }
 
-        private void LoadFromDatabaseOperation(object ignored)
+        private static void LoadFromDatabaseOperation(object _)
         {
             var lfd = new LoadFromDatabaseDialog();
 
@@ -135,13 +135,13 @@ namespace JSON_Display
 
             SettingsSingleton.Settings = VM.CSharp;
 
-            var parseResult = text.ParseJson();
+            var (IsValid, ValidJsonDoc, ErrorMessageDoc) = text.ParseJson();
 
-            if (!parseResult.IsValid)
+            if (!IsValid)
             {
                 VM.JSONText = text;
 
-                tView.ProcessJson(parseResult.ErrorMessageDoc, false, source);
+                tView.ProcessJson(ErrorMessageDoc, false, source);
 
                 return;
             }
@@ -149,13 +149,13 @@ namespace JSON_Display
             var overrideCommand = new OperationCommand(o => MessageBox.Show("Override"));
 
             // If we are sorting, C# will sort it, so process that first.
-            VM.CSharpText = parseResult.ValidJsonDoc.ToCSharpClassesString(VM.CSharp, overrideCommand);
+            VM.CSharpText = ValidJsonDoc.ToCSharpClassesString(VM.CSharp, overrideCommand);
 
-            VM.SQLTableText = parseResult.ValidJsonDoc.ToSqlTableString(VM.CSharp, null);
+            VM.SQLTableText = ValidJsonDoc.ToSqlTableString(VM.CSharp, null);
 
-            VM.SQLTableTypeText = parseResult.ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
+            VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
 
-            tView.ProcessJson(parseResult.ValidJsonDoc, false, source);
+            tView.ProcessJson(ValidJsonDoc, false, source);
 
             tView.OpenFirstItem(true);
 

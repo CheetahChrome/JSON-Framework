@@ -450,7 +450,7 @@
             </ToggleButton>
 
             <Controls:Settings Width="{StaticResource SlideOffSet}"
-                               Height="280"
+                               Height="310"
                                Panel.ZIndex="100"
                                CSharp="{Binding CSharp}" />
         </StackPanel>

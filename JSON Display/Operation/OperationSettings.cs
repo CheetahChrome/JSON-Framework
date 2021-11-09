@@ -77,6 +77,15 @@ namespace JSON_Display.Operation
             set { _AskOnProperties = value; OnPropertyChanged(nameof(AskOnProperties)); }
         }
 
+
+        private bool _SubClassAsIdentityId;
+
+        public bool SubClassAsIdentityId
+        {
+            get => _SubClassAsIdentityId;
+            set { _SubClassAsIdentityId = value; OnPropertyChanged(nameof(SubClassAsIdentityId)); }
+        }
+
         #endregion
 
         #region Construction/Initialization
