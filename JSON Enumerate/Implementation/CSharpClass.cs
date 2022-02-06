@@ -20,8 +20,10 @@ namespace JSON_Enumerate.Implementation
 
         public override string ToString()
         {
+
+            var props = Properties?.Cast<CSharpProperty>();
+
             var sb = new StringBuilder();
-            var props = Properties.Cast<CSharpProperty>();
             var className = string.IsNullOrWhiteSpace(Name)
                           ? ExtractNameFromFirstProperty(props)
                           : Name;
@@ -48,25 +50,28 @@ namespace JSON_Enumerate.Implementation
 
             var tableTypeNumber = 0;
             sb.AppendLine($"public class {name}");
-            sb.AppendLine("{");
 
+            if (props != null)
+            {
+                sb.AppendLine("{");
+                if (SettingsSingleton.Settings.IsSortProperties)
+                    props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
 
-            if (SettingsSingleton.Settings.IsSortProperties)
-                props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
+                var propsList = props.ToList();
 
-            var propsList = props.ToList();
+                if (SettingsSingleton.Settings.AddTableTypeConstraint)
+                    propsList.ForEach(prp => prp.TableTypeNumber = ++tableTypeNumber);
 
-            if (SettingsSingleton.Settings.AddTableTypeConstraint)
-                propsList.ForEach(prp => prp.TableTypeNumber = ++tableTypeNumber);
+                //      [TableType(1)]
+                sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
 
-            //      [TableType(1)]
-            sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
+                sb.AppendLine($"}}{Environment.NewLine}");
 
-            sb.AppendLine($"}}{Environment.NewLine}");
-
-            if (SubClasses?.Any() ?? false)
-                sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
-
+                if (SubClasses?.Any() ?? false)
+                    sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
+            }
+            else // Empty Array at source, unknown objects.
+                sb.AppendLine("{ /* Empty Array Encountered in Source */ }");
 
             return sb.ToString();
         }

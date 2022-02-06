@@ -365,6 +365,8 @@
                      Height="40">
                 <TextBox Text="{Binding JSONText}"
                          PreviewMouseWheel="MouseWheelScroll"
+                         HorizontalScrollBarVisibility="Visible"
+                         VerticalScrollBarVisibility="Visible"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
             <TabItem Header="C#"
@@ -372,6 +374,8 @@
                      Height="40">
                 <TextBox Text="{Binding CSharpText}"
                          PreviewMouseWheel="MouseWheelScroll"
+                         HorizontalScrollBarVisibility="Visible"
+                         VerticalScrollBarVisibility="Visible"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
 
@@ -380,6 +384,8 @@
                      Height="40">
                 <TextBox Text="{Binding SQLTableText}"
                          PreviewMouseWheel="MouseWheelScroll"
+                         HorizontalScrollBarVisibility="Visible"
+                         VerticalScrollBarVisibility="Visible"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
 

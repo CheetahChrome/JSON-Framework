@@ -48,11 +48,11 @@ namespace JSONTreeView
                     break;
 
                 case JsonValueKind.False:
-                    base.Header += $"${key} : false";
+                    base.Header += $"{key} : false";
                     break;
 
                 case JsonValueKind.Undefined:
-                    base.Header += $"${key} : -undefined-";
+                    base.Header += $"{key} : -undefined-";
                     break;
 
 
