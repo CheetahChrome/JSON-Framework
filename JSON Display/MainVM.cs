@@ -44,13 +44,13 @@ namespace JSON_Display
         #region Properties
 
 
-private ObservableCollection<MRU> _MRUS;
+        private ObservableCollection<MRU> _MRUS;
 
-public ObservableCollection<MRU> MRUS
-{
-    get { return _MRUS; }
-    set { _MRUS = value; OnPropertyChanged(nameof(MRUS)); }
-}
+        public ObservableCollection<MRU> MRUS
+        {
+            get { return _MRUS; }
+            set { _MRUS = value; OnPropertyChanged(nameof(MRUS)); }
+        }
 
         private bool _ShowSettingsDialog;
 
@@ -66,6 +66,14 @@ public ObservableCollection<MRU> MRUS
         {
             get => _CSharp;
             set { _CSharp = value; OnPropertyChanged(nameof(CSharp)); }
+        }
+
+        private OperationSettingsDatabase _Database;
+
+        public OperationSettingsDatabase Database
+        {
+            get => _Database;
+            set { _Database = value; OnPropertyChanged(nameof(Database)); }
         }
 
 
@@ -143,6 +151,7 @@ public ObservableCollection<MRU> MRUS
         public MainVM()
         {
             CSharp = new OperationSettings();
+            Database = new OperationSettingsDatabase();
             RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json", @"C:\Temp\Full.Json" };
             MRUS = new ObservableCollection<MRU>(GetMRUS());
         }

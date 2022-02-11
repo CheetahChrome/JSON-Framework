@@ -49,7 +49,7 @@
             ColumnWidth="SizeToHeader" 
             MinWidth="400"
             MinColumnWidth="70"
-            Margin="20" HorizontalAlignment="Stretch" AutoGenerateColumns="False" ColumnHeaderStyle="{DynamicResource dgColumHeader}">
+            Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" ColumnHeaderStyle="{DynamicResource dgColumHeader}">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding PropertyName}" Header="Name"   />
             <DataGridTextColumn Binding="{Binding JSONPropertyType}" Header="JSON Type" />

@@ -9,6 +9,7 @@
              d:DesignHeight="360"
              d:DesignWidth="310"
              Background="White"
+             Width="310"
              Opacity="80">
     <!--<Grid>
         <Grid.ColumnDefinitions>

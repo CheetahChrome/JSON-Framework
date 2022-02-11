@@ -21,8 +21,6 @@ namespace JSON_Display.Controls
     public partial class Settings : UserControl
     {
 
-
-
         #region public CSharpSettings CSharp
 
         /// <summary>The settings for csharp processor</summary>

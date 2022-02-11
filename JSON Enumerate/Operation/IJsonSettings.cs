@@ -3,7 +3,6 @@
     public interface IJsonSettings
     {
         string Name { get; set; }
-
         string ClassName { get; set; }
         bool AddDTOSuffix { get; set; }
         bool AddJsonProperty { get; set; }
