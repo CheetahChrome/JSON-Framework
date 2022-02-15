@@ -7,8 +7,6 @@ namespace JSON_Enumerate.Implementation
 {
     public class SQLProperty : BareJsonProperty
     {
-
-
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -20,7 +18,8 @@ namespace JSON_Enumerate.Implementation
             //    [UpdateDttm] [datetime] NOT NULL,
             //    [PhoneGUId] [nvarchar](40) NULL,
 
-            sb.Append($"   [{Name}] ");
+            if (JsonType != JsonPropType.UserType)
+                sb.Append($"   [{Name}] ");
 
             switch (JsonType)
             {
@@ -37,9 +36,9 @@ namespace JSON_Enumerate.Implementation
                     sb.Append("[bit]");
                     break;
 
-                // TODO investigate
+                // TODO Create sub table with FKs
                 case JsonPropType.UserType:
-                    sb.Append($"{Name} ");
+                    sb.Append($"   [int] {Name}Id");
                     break;
 
                 default:

@@ -6,7 +6,6 @@ namespace JSON_Enumerate.Operation
 {
     public class JsonOperationBase : IJsonOperation
     {
-
         public List<IProperty> Properties { get; set; }
 
         public List<IJsonOperation> SubClasses { get; set; }

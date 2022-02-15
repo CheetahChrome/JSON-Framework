@@ -17,7 +17,6 @@ namespace JSON_Enumerate.Implementation
 
         public CSharpClass() {}
 
-
         public override string ToString()
         {
 
