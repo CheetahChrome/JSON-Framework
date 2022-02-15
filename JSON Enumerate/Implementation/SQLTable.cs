@@ -128,7 +128,7 @@ go";
             if (string.IsNullOrEmpty(Parent))
             {
                 sb.AppendLine();
-                sb.AppendLine(SQLProperty.ToDrop($"[{Schema}].{Name}]"));
+                sb.AppendLine(SQLProperty.ToDrop($"[{Schema}].[{Name}]"));
             }
             return sb.ToString();
         }
