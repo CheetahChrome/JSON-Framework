@@ -71,6 +71,9 @@ namespace JSON_Enumerate.Implementation
             
             sb.AppendLine($"   [{id}][int] IDENTITY(10000, 1) NOT NULL,{Environment.NewLine}");
 
+            if (!string.IsNullOrEmpty(Parent)) // and a FK
+                sb.AppendLine($"   [{Parent}Id][int] NOT NULL,{Environment.NewLine}");
+
             var props = Properties.Cast<SQLProperty>();
 
             if (SettingsSingleton.Settings.IsSortProperties)
@@ -85,13 +88,37 @@ namespace JSON_Enumerate.Implementation
             sb.AppendJoin(Environment.NewLine, propsList.Select(prp => prp.ToString()));
 
             sb.AppendLine(string.Empty);
-            sb.AppendLine($"   CONSTRAINT[PK__{Name}__1] PRIMARY KEY CLUSTERED ([{id}] ASC){Environment.NewLine}");
+            sb.Append($"   CONSTRAINT[PK__{Name}__1] PRIMARY KEY CLUSTERED ([{id}]");
+
+            if (!string.IsNullOrEmpty(Parent))
+                sb.Append($", [{Parent}Id]");
+                
+            sb.AppendLine($" ASC){Environment.NewLine}");
             sb.AppendLine($"   WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]{Environment.NewLine}");
             sb.AppendLine($") ON[PRIMARY]{Environment.NewLine}");
 
+            // FK Relationship to the parent table.
+            if (!string.IsNullOrEmpty(Parent))
+            {
+                var constraint = $"FK_{Name}_{Parent}";
+
+                var fkStr = $@"go
+
+alter table [{Schema}].[{Name}] with check add constraint [{constraint}] foreign key ([{Parent}Id])
+references [{Schema}].[{Parent}] ([{Parent}Id])
+go
+
+alter table [{Schema}].[{Name}] check constraint [{constraint}]
+go";
+                sb.AppendLine($"{fkStr}{Environment.NewLine}");
+            }
+
             // FK Tables
             if (SubClasses?.Any() ?? false)
+            { 
+                SubClasses.ForEach(subClass => subClass.Parent = Name);
                 sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
+            }
 
 
             return sb.ToString();

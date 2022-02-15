@@ -18,6 +18,8 @@ namespace JSON_Enumerate.Operation
 
         public bool IsSubClass {  get; set; }
 
+        public string Parent { get; set; }
+
         public string _Name;
         public string Name
         {

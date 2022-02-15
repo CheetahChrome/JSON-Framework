@@ -13,7 +13,7 @@
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
         Title="JSON Framework App"
-        Height="450"
+        Height="660"
         Width="840">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />

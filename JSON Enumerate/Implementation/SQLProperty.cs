@@ -25,20 +25,20 @@ namespace JSON_Enumerate.Implementation
             {
                 case JsonPropType.Undefined:
                 case JsonPropType.StrType:
-                    sb.Append("[nvarchar](128)");
+                    sb.Append("[nvarchar](128) null");
                     break;
 
                 case JsonPropType.NumberType:
-                    sb.Append("[int]");
+                    sb.Append("[int] null");
                     break;
 
                 case JsonPropType.BoolType:
-                    sb.Append("[bit]");
+                    sb.Append("[bit] null");
                     break;
 
                 // TODO Create sub table with FKs
                 case JsonPropType.UserType:
-                    sb.Append($"   [int] {Name}Id");
+                    sb.Append($"   {Name}Id [int]  null");
                     break;
 
                 default:

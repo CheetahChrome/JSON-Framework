@@ -14,6 +14,8 @@ namespace JSON_Enumerate.Operation
 
         bool IsSubClass { get; set; }
 
+        public string Parent { get; set; }
+
         List<IProperty> Properties { get; set; }
 
         List<IJsonOperation> SubClasses { get; set; }
