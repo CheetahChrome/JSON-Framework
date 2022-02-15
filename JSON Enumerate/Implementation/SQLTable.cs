@@ -118,9 +118,18 @@ go";
             { 
                 SubClasses.ForEach(subClass => subClass.Parent = Name);
                 sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
+
+                sb.AppendLine(string.Empty);
+
+                sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => SQLProperty.ToDrop( $"[{Schema}].{sbc.Name}]" ))));
             }
 
-
+            // Drops
+            if (string.IsNullOrEmpty(Parent))
+            {
+                sb.AppendLine();
+                sb.AppendLine(SQLProperty.ToDrop($"[{Schema}].{Name}]"));
+            }
             return sb.ToString();
         }
     }

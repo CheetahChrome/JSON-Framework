@@ -49,5 +49,8 @@ namespace JSON_Enumerate.Implementation
 
             return sb.ToString();
         }
+
+        public static string ToDrop(string targetTable)
+            => $"-- DROP TABLE IF EXISTS {targetTable};{Environment.NewLine}GO";
     }
 }
