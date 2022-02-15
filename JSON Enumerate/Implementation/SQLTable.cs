@@ -11,7 +11,6 @@ namespace JSON_Enumerate.Implementation
     {
         private string _Schema;
 
-
         public int IdentityStart { get; set;  }
 
         public string Schema
@@ -85,9 +84,14 @@ namespace JSON_Enumerate.Implementation
             //sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
             sb.AppendJoin(Environment.NewLine, propsList.Select(prp => prp.ToString()));
 
+            sb.AppendLine(string.Empty);
             sb.AppendLine($"   CONSTRAINT[PK__{Name}__1] PRIMARY KEY CLUSTERED ([{id}] ASC){Environment.NewLine}");
             sb.AppendLine($"   WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]{Environment.NewLine}");
-            sb.AppendLine(") ON[PRIMARY]");
+            sb.AppendLine($") ON[PRIMARY]{Environment.NewLine}");
+
+            // FK Tables
+            if (SubClasses?.Any() ?? false)
+                sb.Append(string.Join($"{Environment.NewLine}", SubClasses.Select(sbc => sbc.ToString())));
 
 
             return sb.ToString();
