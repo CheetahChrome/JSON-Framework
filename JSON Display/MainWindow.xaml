@@ -398,6 +398,14 @@
                          PreviewMouseWheel="MouseWheelScroll"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
+            
+            <TabItem Header="Blazorise"
+                     Width="100"
+                     Height="40">
+                <TextBox Text="{Binding BlazoriseText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
+            </TabItem>
 
         </TabControl>
 

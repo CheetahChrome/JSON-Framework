@@ -97,7 +97,6 @@ namespace JSON_Display
             }
         }
 
-
         private string _SQLTableText;
 
         public string SQLTableText
@@ -112,6 +111,15 @@ namespace JSON_Display
         {
             get => _SQLTableTypeText;
             set { _SQLTableTypeText = value; OnPropertyChanged(nameof(SQLTableTypeText)); }
+        }
+
+
+        private string _BlazoriseText;
+
+        public string BlazoriseText
+        {
+            get { return _BlazoriseText; }
+            set { _BlazoriseText = value; OnPropertyChanged(nameof(BlazoriseText)); }
         }
 
         private double _MainFontSize;
@@ -204,7 +212,7 @@ namespace JSON_Display
 
         internal void ClearAll()
         {
-            CSharpText = JSONText = SQLTableText = SQLTableTypeText = null;
+            CSharpText = JSONText = SQLTableText = SQLTableTypeText = BlazoriseText = null;
         }
 
         #endregion

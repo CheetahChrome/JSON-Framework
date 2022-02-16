@@ -155,6 +155,8 @@ namespace JSON_Display
 
             VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
 
+            VM.BlazoriseText = ValidJsonDoc.ToBlazoriseDataGridString(VM.CSharp);
+
             tView.ProcessJson(ValidJsonDoc, false, source);
 
             tView.OpenFirstItem(true);
