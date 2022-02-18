@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using JSON_Enumerate.Operation;
 
 namespace JSON_Enumerate
@@ -84,12 +85,26 @@ namespace JSON_Enumerate
             var instance = new P() { Name = key, OverrideProperty = originParent.OverrideProperty };
             var jElement = jp.Value;
             instance.RawValueText = jElement.GetRawText();
+            if (!string.IsNullOrEmpty(instance.RawValueText))
+                instance.ValueText = Regex.Replace(instance.RawValueText, "\x22", string.Empty);
 
             switch (jElement.ValueKind)
             {
 
                 case JsonValueKind.Null:
                 case JsonValueKind.String:
+
+                    // Is this a datetime?
+                    if (!string.IsNullOrEmpty(instance.ValueText))
+                    {
+                        if (char.IsDigit(instance.ValueText[0]))
+                            {
+                            instance.IsDateTime = DateTimeOffset.TryParse(instance.ValueText, out DateTimeOffset date);
+
+                            if (instance.IsDateTime)
+                                instance.Date = date;
+                            }
+                    }
                     instance.JsonType = JsonPropType.StrType;
                     instance.Size = jElement.GetRawText().Length;
                     break;

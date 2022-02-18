@@ -14,20 +14,21 @@ namespace JSON_Enumerate.Implementation
 
         public string RawValueText { get; set; }
 
+        public string ValueText { get; set; }
+
         public JsonPropType JsonType { get; set; }
 
         public bool IsUserType() => JsonType == JsonPropType.UserType;
         public bool IsUndefined() => JsonType == JsonPropType.Undefined;
 
+        public bool IsDateTime { get; set; }
+
+        public DateTimeOffset Date { get; set; }
         public bool IsId() =>
             !IsUserType() && !IsUndefined() && Name.EndsWith("id", StringComparison.OrdinalIgnoreCase);
 
         public ICommand OverrideProperty { get; set; }
 
-
-        public override string ToString()
-        {
-            return $@"\x22{Name} : {RawValueText}";
-        }
+        public override string ToString() => $@"\x22{Name} : {RawValueText}";
     }
 }

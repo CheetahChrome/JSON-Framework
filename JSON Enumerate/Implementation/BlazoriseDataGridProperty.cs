@@ -7,41 +7,42 @@ namespace JSON_Enumerate.Implementation
 {
     public class BlazoriseDataGridProperty : BareJsonProperty
     {
-        public override string ToString()
+
+        public override string ToString() => Name;
+        public  string ToDataGridColumn(string dto)
         {
-            return Name;
-            //var sb = new StringBuilder();
+            //            return Name;
+            var sb = new StringBuilder();
 
+            // $"\t<DataGridColumn TItem=\x22{dto}\x22 Field=\x22nameof({dto}.{prp})\x22 Caption=\x22{prp}\x22 />"));
 
-            //sb.Append($"<DataGridColumn TItem =\x22 )
+            sb.Append($"\t<DataGrid");
 
-            //switch (JsonType)
-            //{
-            //    case JsonPropType.Undefined:
-            //    case JsonPropType.StrType:
-            //        sb.Append("[nvarchar](128) null");
-            //        break;
+            switch (JsonType)
+            {
+                case JsonPropType.Undefined:
+                case JsonPropType.StrType:
+                    if (IsDateTime)
+                        sb.Append("Date");
+                    break;
 
-            //    case JsonPropType.NumberType:
-            //        sb.Append("[int] null");
-            //        break;
+                case JsonPropType.NumberType:
+                    sb.Append("Numeric");
+                    break;
 
-            //    case JsonPropType.BoolType:
-            //        sb.Append("[bit] null");
-            //        break;
+                case JsonPropType.BoolType:
+                    sb.Append("Check");
+                    break;
 
-            //    // TODO Create sub table with FKs
-            //    case JsonPropType.UserType:
-            //        sb.Append($"   {Name}Id [int]  null");
-            //        break;
+                case JsonPropType.UserType:
+                    sb.Append($"Select");
+                    break;
 
-            //    default:
-            //        throw new ArgumentOutOfRangeException(JsonType.ToString());
-            //}
+            }
 
-            //sb.AppendLine(",");
+            sb.Append($"Column TItem=\x22{dto}\x22 Field=\x22nameof({dto}.{Name})\x22 Caption=\x22{Name}\x22 />");
 
-            //return sb.ToString();
+            return sb.ToString();
         }
 
         public static string ToDrop(string targetTable)

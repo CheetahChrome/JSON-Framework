@@ -36,7 +36,7 @@ public class BlazorizeDataGrid : JsonOperationBase
         if (SettingsSingleton.Settings.IsSortProperties)
             props = props.OrderBy(nm => nm.Name).ThenBy(prp => prp.IsId());
 
-        sb.AppendJoin(Environment.NewLine, props.Select(prp => $"\t<DataGridColumn TItem=\x22{dto}\x22 Field=\x22nameof({dto}.{prp})\x22 Caption=\x22{prp}\x22 />"));
+        sb.AppendJoin($",{Environment.NewLine}", props.Select(prp => prp.ToDataGridColumn(dto)));
 
         sb.AppendLine($"{Environment.NewLine}</DataGrid>");
 
