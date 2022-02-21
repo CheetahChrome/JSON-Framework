@@ -84,6 +84,10 @@ namespace JSON_Enumerate.Implementation
             var firstPropName = props.First().Name;
 
             className = Regex.Replace(firstPropName, "id$", string.Empty, RegexOptions.IgnoreCase);
+
+            if (string.IsNullOrEmpty(className) && props.Count() > 1) // Let us look at the second property for a name.
+                className = Regex.Replace(props.ToList()[1].Name, "id$", string.Empty, RegexOptions.IgnoreCase);
+
             return className;
         }
     }

@@ -12,7 +12,7 @@
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="JSON Framework App"
+        Title="Json Hero"
         Height="660"
         Width="840">
     <Window.Resources>

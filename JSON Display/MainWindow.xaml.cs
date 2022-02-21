@@ -151,6 +151,9 @@ namespace JSON_Display
             // If we are sorting, C# will sort it, so process that first.
             VM.CSharpText = ValidJsonDoc.ToCSharpClassesString(VM.CSharp, overrideCommand);
 
+            if (string.IsNullOrEmpty(VM.CSharp.Name))
+                VM.CSharp.Name = VM.CSharp.ClassName;
+
             VM.SQLTableText = ValidJsonDoc.ToSqlTableString(VM.CSharp, null);
 
             VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
