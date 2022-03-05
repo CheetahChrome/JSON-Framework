@@ -19,6 +19,7 @@ namespace JSON_Display
     {
         #region Commands
 
+        public ICommand ReloadFromTextCmd { get; set; }
         public ICommand JSONLoadInternal     { get; set; } 
         public ICommand JSONLoadFromClipboard { get; set; }
         public ICommand JSONLoadFromDatabase => new OperationCommand(LoadFromDatabase);
@@ -210,9 +211,14 @@ namespace JSON_Display
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        internal void ClearAll()
+        internal void ClearAll(bool ignoreJsonText = false)
         {
-            CSharpText = JSONText = SQLTableText = SQLTableTypeText = BlazoriseText = null;
+            CSharpText = SQLTableText = SQLTableTypeText = BlazoriseText = null;
+
+            Error = null;
+
+            if (!ignoreJsonText)
+                JSONText = null;
         }
 
         #endregion

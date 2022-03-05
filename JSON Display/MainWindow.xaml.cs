@@ -69,7 +69,16 @@ namespace JSON_Display
 
         private void LoadCommands()
         {
-            VM.ErrorCopyToClipboard = new OperationCommand((o) =>
+            VM.ReloadFromTextCmd = new OperationCommand((_) =>
+            {
+                if (string.IsNullOrWhiteSpace(VM.JSONText)) return;
+
+                VM.ClearAll(true); // True tells it to not touch the, most likely, changed json text.
+
+                ShowJSON(VM.JSONText, "Root", true);
+            });
+
+            VM.ErrorCopyToClipboard = new OperationCommand((_) =>
             {
                 if (!string.IsNullOrEmpty(VM.Error))
                     Clipboard.SetText(VM.Error);
@@ -111,6 +120,8 @@ namespace JSON_Display
                 "Clipboard"));
 
             //    VM.JSONLoadFromDatabase = new OperationCommand(LoadFromDatabaseOperation);
+
+
         }
 
         private static void LoadFromDatabaseOperation(object _)
@@ -127,45 +138,52 @@ namespace JSON_Display
             VM.ClearAll();
         }
 
-        private void ShowJSON(string text, string source = "Root")
+        private void ShowJSON(string text, string source = "Root", bool skipJsonText = false)
         {
-            if (string.IsNullOrWhiteSpace(text)) return;
-
-            tView.ClearTree();
-
-            SettingsSingleton.Settings = VM.CSharp;
-
-            var (IsValid, ValidJsonDoc, ErrorMessageDoc) = text.ParseJson();
-
-            if (!IsValid)
+            try
             {
-                VM.JSONText = text;
+                if (string.IsNullOrWhiteSpace(text)) return;
 
-                tView.ProcessJson(ErrorMessageDoc, false, source);
+                tView.ClearTree();
 
-                return;
+                SettingsSingleton.Settings = VM.CSharp;
+
+                var (IsValid, ValidJsonDoc, ErrorMessageDoc) = text.ParseJson();
+
+                if (!IsValid)
+                {
+                    VM.JSONText = text;
+
+                    tView.ProcessJson(ErrorMessageDoc, false, source);
+
+                    return;
+                }
+
+                var overrideCommand = new OperationCommand(o => MessageBox.Show("Override"));
+
+                // If we are sorting, C# will sort it, so process that first.
+                VM.CSharpText = ValidJsonDoc.ToCSharpClassesString(VM.CSharp, overrideCommand);
+
+                if (string.IsNullOrEmpty(VM.CSharp.Name))
+                    VM.CSharp.Name = VM.CSharp.ClassName;
+
+                VM.SQLTableText = ValidJsonDoc.ToSqlTableString(VM.CSharp, null);
+
+                VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
+
+                VM.BlazoriseText = ValidJsonDoc.ToBlazoriseDataGridString(VM.CSharp);
+
+                tView.ProcessJson(ValidJsonDoc, false, source);
+
+                tView.OpenFirstItem(true);
+
+                if (!skipJsonText)
+                    VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
             }
-
-            var overrideCommand = new OperationCommand(o => MessageBox.Show("Override"));
-
-            // If we are sorting, C# will sort it, so process that first.
-            VM.CSharpText = ValidJsonDoc.ToCSharpClassesString(VM.CSharp, overrideCommand);
-
-            if (string.IsNullOrEmpty(VM.CSharp.Name))
-                VM.CSharp.Name = VM.CSharp.ClassName;
-
-            VM.SQLTableText = ValidJsonDoc.ToSqlTableString(VM.CSharp, null);
-
-            VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
-
-            VM.BlazoriseText = ValidJsonDoc.ToBlazoriseDataGridString(VM.CSharp);
-
-            tView.ProcessJson(ValidJsonDoc, false, source);
-
-            tView.OpenFirstItem(true);
-
-            VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
-
+            catch (Exception ex)
+            {
+                VM.Error = ex.Demystify().ToString();
+            }
 
         }
 
@@ -253,7 +271,6 @@ namespace JSON_Display
             }
         }
     }
-
 
     public class StaticResourceConverter : IValueConverter
     {
