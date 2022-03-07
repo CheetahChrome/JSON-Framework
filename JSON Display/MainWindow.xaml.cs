@@ -69,6 +69,42 @@ namespace JSON_Display
 
         private void LoadCommands()
         {
+            VM.FileSaveCmd = new OperationCommand((_) =>
+            {
+
+                TabItem ti = tbMain.SelectedItem as TabItem;
+
+                if (ti.Tag == null) return;
+
+                var items = ti.Tag.ToString().Split('$');
+                var dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.FileName = "Document"; // Default file name
+                dialog.DefaultExt = items[0]; // Default file extension
+                dialog.Filter = items[1]; // Filter files by extension
+                
+                // Show open file dialog box
+                bool? result = dialog.ShowDialog();
+
+                // Process open file dialog box results
+                if (result == true)
+                {
+                    // Open document
+                    string filename = dialog.FileName;
+
+                     switch(ti.Header)
+                    {
+                        case "Tree":
+                        case "Text": File.WriteAllText(dialog.FileName, VM.JSONText); break;
+                        case "C#" : File.WriteAllText(dialog.FileName, VM.CSharpText); break;
+                        case "SQL Server" : File.WriteAllText(dialog.FileName, VM.SQLTableText); break;
+                        case "Table Type" : File.WriteAllText(dialog.FileName, VM.SQLTableTypeText); break;
+                        case "TBlazorise": File.WriteAllText(dialog.FileName, VM.BlazoriseText); break;
+                    };
+                }
+
+
+            });
+
             VM.ReloadFromTextCmd = new OperationCommand((_) =>
             {
                 if (string.IsNullOrWhiteSpace(VM.JSONText)) return;

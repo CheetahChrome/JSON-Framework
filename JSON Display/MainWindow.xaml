@@ -96,7 +96,16 @@
 
             </Image.Source>
         </Image>-->
+        
     </Window.Resources>
+
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding FileSaveCmd}"
+              Gesture="CTRL+S" />
+    </Window.InputBindings>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -328,6 +337,7 @@
                     TabStripPlacement="Left"
                     FontFamily="Consolas"
                     FontSize="14"
+                    x:Name="tbMain"
                     Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TextBox}">
@@ -364,6 +374,7 @@
             </TabItem>
             <TabItem Header="Text"
                      Width="100"
+                     Tag=".json$ Json documents(.json) | *.json"
                      Height="40">
                 <TextBox Text="{Binding JSONText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseWheel="MouseWheelScroll"
@@ -373,6 +384,7 @@
             </TabItem>
             <TabItem Header="C#"
                      Width="100"
+                     Tag=".cs$ C# documents(.cs) | *.cs"
                      Height="40">
                 <TextBox Text="{Binding CSharpText}"
                          PreviewMouseWheel="MouseWheelScroll"
@@ -383,6 +395,7 @@
 
             <TabItem Header="SQL Table"
                      Width="100"
+                     Tag=".sql$ sql documents(.sql) | *.sql"
                      Height="40">
                 <TextBox Text="{Binding SQLTableText}"
                          PreviewMouseWheel="MouseWheelScroll"
@@ -393,6 +406,7 @@
 
             <TabItem Header="Table Type"
                      Width="100"
+                     Tag=".txt$ Txt documents(.txt) | *.txt"
                      Height="40">
                 <TextBox Text="{Binding SQLTableTypeText}"
                          PreviewMouseWheel="MouseWheelScroll"
@@ -401,6 +415,7 @@
             
             <TabItem Header="Blazorise"
                      Width="100"
+                     Tag=".txt$ Txt documents(.txt) | *.txt"
                      Height="40">
                 <TextBox Text="{Binding BlazoriseText}"
                          PreviewMouseWheel="MouseWheelScroll"

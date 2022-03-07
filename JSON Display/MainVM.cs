@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using JSON_Display.Models;
 using JSON_Display.Operation;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Linq;
 
@@ -19,6 +18,7 @@ namespace JSON_Display
     {
         #region Commands
 
+        public ICommand FileSaveCmd { get; set; }
         public ICommand ReloadFromTextCmd { get; set; }
         public ICommand JSONLoadInternal     { get; set; } 
         public ICommand JSONLoadFromClipboard { get; set; }
