@@ -365,7 +365,7 @@
             </TabControl.ItemContainerStyle>
 
             <TabItem Header="Tree"
-                     Width="100"
+                     Width="70"
                      Height="40">
                 <TreeView x:Name="tView"
                           HorizontalAlignment="Stretch"
@@ -373,7 +373,7 @@
                           PreviewMouseWheel="MouseWheelScroll" />
             </TabItem>
             <TabItem Header="Text"
-                     Width="100"
+                     Width="70"
                      Tag=".json$ Json documents(.json) | *.json"
                      Height="40">
                 <TextBox Text="{Binding JSONText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -383,7 +383,7 @@
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
             <TabItem Header="C#"
-                     Width="100"
+                     Width="60"
                      Tag=".cs$ C# documents(.cs) | *.cs"
                      Height="40">
                 <TextBox Text="{Binding CSharpText}"
@@ -394,7 +394,7 @@
             </TabItem>
 
             <TabItem Header="SQL Table"
-                     Width="100"
+                     Width="90"
                      Tag=".sql$ sql documents(.sql) | *.sql"
                      Height="40">
                 <TextBox Text="{Binding SQLTableText}"
@@ -405,22 +405,30 @@
             </TabItem>
 
             <TabItem Header="Table Type"
-                     Width="100"
-                     Tag=".txt$ Txt documents(.txt) | *.txt"
+                     Width="90"
+                     Tag=".sql$ sql documents(.sql) | *.sql"
                      Height="40">
                 <TextBox Text="{Binding SQLTableTypeText}"
                          PreviewMouseWheel="MouseWheelScroll"
-                         FontSize="{Binding MainFontSize}" />
+                         FontSize="{Binding MainFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </TabItem>
-            
+
             <TabItem Header="Blazorise"
-                     Width="100"
-                     Tag=".txt$ Txt documents(.txt) | *.txt"
+                     Width="80"
+                     Tag=".razor$ Txt documents(.razor) | *.razor"
                      Height="40">
                 <TextBox Text="{Binding BlazoriseText}"
                          PreviewMouseWheel="MouseWheelScroll"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
+            <TabItem Header="Components"
+                     Width="80"
+                     Tag=".razor$ Txt documents(.razor) | *.razor"
+                     Height="40">
+                    <TextBox Text="{Binding BlazoriseText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize}" />
+                </TabItem>
 
         </TabControl>
 
