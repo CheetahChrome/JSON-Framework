@@ -104,6 +104,8 @@ namespace JSON_Enumerate
                             if (instance.IsDateTime)
                                 instance.Date = date;
                             }
+                        if (!instance.IsDateTime && instance.ValueText.Length > 50)
+                            instance.IsLargeString = true;
                     }
                     instance.JsonType = JsonPropType.StrType;
                     instance.Size = jElement.GetRawText().Length;

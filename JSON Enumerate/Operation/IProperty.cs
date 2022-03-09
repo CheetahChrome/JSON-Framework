@@ -35,6 +35,8 @@ namespace JSON_Enumerate.Operation
 
         bool IsDateTime { get; set; }
 
+        bool IsLargeString { get; set; }
+
         JsonPropType JsonType { get; set; }
 
         ICommand OverrideProperty { get; set; }

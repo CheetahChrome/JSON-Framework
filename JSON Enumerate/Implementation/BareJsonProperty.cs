@@ -22,6 +22,7 @@ namespace JSON_Enumerate.Implementation
         public bool IsUndefined() => JsonType == JsonPropType.Undefined;
 
         public bool IsDateTime { get; set; }
+        public bool IsLargeString { get; set; }
 
         public DateTimeOffset Date { get; set; }
         public bool IsId() =>
