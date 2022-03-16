@@ -89,6 +89,10 @@ namespace JSONTreeView
             => doc.RootElement.WalkStructure<BlazorizeDataGrid, BlazoriseDataGridProperty>
                 (new BlazorizeDataGrid(settings, overrideProperty), null).ToString();
 
+        public static string ToComponentString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
+            => doc.RootElement.WalkStructure<BlazorizeComponent, BlazoriseComponentProperty>
+                (new BlazorizeComponent(settings, overrideProperty), null).ToString();
+
         /// <summary>
         /// Take a JSON string and parse it into a JsonDocument.
         /// </summary>

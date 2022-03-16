@@ -6,4 +6,8 @@
     <PackageId>JSONEnumerate</PackageId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Json.Common\Json.Common.csproj" />
+  </ItemGroup>
+
 </Project>

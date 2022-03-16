@@ -18,8 +18,10 @@ namespace JSON_Enumerate.Implementation
             //    [UpdateDttm] [datetime] NOT NULL,
             //    [PhoneGUId] [nvarchar](40) NULL,
 
+            var name = NamePascalCase;
+
             if (JsonType != JsonPropType.UserType)
-                sb.Append($"   [{Name}] ");
+                sb.Append($"   [{name}] ");
 
             switch (JsonType)
             {
@@ -38,7 +40,7 @@ namespace JSON_Enumerate.Implementation
 
                 // TODO Create sub table with FKs
                 case JsonPropType.UserType:
-                    sb.Append($"   {Name}Id [int]  null");
+                    sb.Append($"   {name}Id [int]  null");
                     break;
 
                 default:

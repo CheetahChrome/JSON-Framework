@@ -78,7 +78,7 @@ namespace JSON_Display
 
                 var items = ti.Tag.ToString().Split('$');
                 var dialog = new Microsoft.Win32.SaveFileDialog();
-                dialog.FileName = "Document"; // Default file name
+                dialog.FileName = string.IsNullOrWhiteSpace(VM.CSharp.Name) ? "Document": VM.CSharp.Name; // Default file name
                 dialog.DefaultExt = items[0]; // Default file extension
                 dialog.Filter = items[1]; // Filter files by extension
                 
@@ -208,6 +208,8 @@ namespace JSON_Display
                 VM.SQLTableTypeText = ValidJsonDoc.ToSqlTableTypeString(VM.CSharp);
 
                 VM.BlazoriseText = ValidJsonDoc.ToBlazoriseDataGridString(VM.CSharp);
+
+                VM.ComponentText = ValidJsonDoc.ToComponentString(VM.CSharp);
 
                 tView.ProcessJson(ValidJsonDoc, false, source);
 

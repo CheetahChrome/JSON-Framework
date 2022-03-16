@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Json.Common.Extensions;
 using JSON_Enumerate.Operation;
 
 namespace JSON_Enumerate.Implementation
@@ -44,7 +45,9 @@ namespace JSON_Enumerate.Implementation
                     Name = Settings.Name;
             }
 
-            sb.AppendLine($"CREATE TYPE [{Schema}].[{Name}TT] AS TABLE");
+            var name = Name.ToPascalCase();
+
+            sb.AppendLine($"CREATE TYPE [{Schema}].[{name}TT] AS TABLE");
             sb.AppendLine($"({Environment.NewLine}");
             // sb.AppendLine($"   [{id}][int] NULL,{Environment.NewLine}");
 

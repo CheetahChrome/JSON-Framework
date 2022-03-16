@@ -1,4 +1,5 @@
-﻿using JSON_Enumerate.Operation;
+﻿using Json.Common.Extensions;
+using JSON_Enumerate.Operation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,10 @@ namespace JSON_Enumerate.Implementation
             if ((Settings != null) && string.IsNullOrWhiteSpace(Settings?.ClassName))
                 Settings.ClassName = Name;
 
-           var name = SettingsSingleton.Settings.AddDTOSuffix ? $"{Name}DTO" : Name;
+            var name = Name.ToPascalCase();
+
+            if (SettingsSingleton.Settings.AddDTOSuffix)
+                name = $"{name}DTO";
 
             var tableTypeNumber = 0;
             sb.AppendLine($"public class {name}");

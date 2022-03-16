@@ -12,7 +12,7 @@
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="Json Hero"
+        Title="Json Hero V1.2"
         Height="660"
         Width="840">
     <Window.Resources>
@@ -386,7 +386,7 @@
                      Width="60"
                      Tag=".cs$ C# documents(.cs) | *.cs"
                      Height="40">
-                <TextBox Text="{Binding CSharpText}"
+                <TextBox Text="{Binding CSharpText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseWheel="MouseWheelScroll"
                          HorizontalScrollBarVisibility="Visible"
                          VerticalScrollBarVisibility="Visible"
@@ -397,7 +397,7 @@
                      Width="90"
                      Tag=".sql$ sql documents(.sql) | *.sql"
                      Height="40">
-                <TextBox Text="{Binding SQLTableText}"
+                <TextBox Text="{Binding SQLTableText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseWheel="MouseWheelScroll"
                          HorizontalScrollBarVisibility="Visible"
                          VerticalScrollBarVisibility="Visible"
@@ -417,7 +417,7 @@
                      Width="80"
                      Tag=".razor$ Txt documents(.razor) | *.razor"
                      Height="40">
-                <TextBox Text="{Binding BlazoriseText}"
+                <TextBox Text="{Binding BlazoriseText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseWheel="MouseWheelScroll"
                          FontSize="{Binding MainFontSize}" />
             </TabItem>
@@ -425,7 +425,7 @@
                      Width="80"
                      Tag=".razor$ Txt documents(.razor) | *.razor"
                      Height="40">
-                    <TextBox Text="{Binding BlazoriseText}"
+                <TextBox Text="{Binding ComponentText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseWheel="MouseWheelScroll"
                          FontSize="{Binding MainFontSize}" />
                 </TabItem>

@@ -40,7 +40,7 @@ namespace JSON_Enumerate.Implementation
 
             }
 
-            sb.Append($"Column TItem=\x22{dto}\x22 Editable=\x22true\x22 Caption=\x22{Name}\x22 Field=\x22nameof({dto}.{Name})\x22  />");
+            sb.Append($"Column TItem=\x22{dto}\x22 Editable=\x22true\x22 Caption=\x22{Name}\x22 Field=\x22@nameof({dto}.{Name})\x22  />");
 
             return sb.ToString();
         }

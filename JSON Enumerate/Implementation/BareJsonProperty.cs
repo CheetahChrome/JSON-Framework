@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Json.Common.Extensions;
 using JSON_Enumerate.Operation;
 
 namespace JSON_Enumerate.Implementation
@@ -10,6 +11,9 @@ namespace JSON_Enumerate.Implementation
     {
 
         public string Name { get; set; }
+
+        public string NamePascalCase => Name.ToPascalCase();
+
         public int Size { get; set; }
 
         public string RawValueText { get; set; }

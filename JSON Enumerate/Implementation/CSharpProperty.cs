@@ -1,4 +1,5 @@
-﻿using JSON_Enumerate.Operation;
+﻿using Json.Common.Extensions;
+using JSON_Enumerate.Operation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,15 +26,16 @@ namespace JSON_Enumerate.Implementation
             if (TableTypeNumber > 0)
                 sb.AppendLine($"{prefix}[TableType({TableTypeNumber})]");
 
+            char c2 = Name[2];
+            var name = Char.IsLower(c2) ? Name : Name.ToPascalCase();
 
             // [JsonProperty("Wind")]
             if (SettingsSingleton.Settings.AddJsonProperty)
-                sb.AppendLine(@$"{prefix}[JsonProperty(""{Name}"")]");
+                sb.AppendLine(@$"{prefix}[JsonProperty(""{name}"")]");
 
             // [JsonPropertyName("Wind")]
             if (SettingsSingleton.Settings.AddJsonProperty)
-                sb.AppendLine(@$"{prefix}[JsonPropertyName(""{Name}"")]");
-
+                sb.AppendLine(@$"{prefix}[JsonPropertyName(""{name}"")]");
 
             sb.Append($"{prefix}public ");
 
@@ -41,7 +43,7 @@ namespace JSON_Enumerate.Implementation
             {
                 case JsonPropType.Undefined:
                 case JsonPropType.StrType:
-                    sb.Append("string ");
+                    sb.Append(IsDateTime? "DateTime " : "string ");
                     break;
                 case JsonPropType.NumberType:
                 //    OverrideProperty?.Execute(null);
@@ -53,13 +55,18 @@ namespace JSON_Enumerate.Implementation
                     break;
 
                 case JsonPropType.UserType:
-                    sb.Append($"{Name} ");
+                    sb.Append($"{name} ");
                     break;
 
             }
 
-            sb.Append($" {Name} {{ get; set; }}");
-            sb.Append(Environment.NewLine);
+            sb.AppendLine($" {name} {{ get; set; }}");
+
+            if (Name.EndsWith("Id"))
+            { 
+                var shortName = name.Substring(0, name.Length - 2);
+                sb.AppendLine($"{prefix}public string {shortName}Str {{ get; set; }}");
+            }
 
             return sb.ToString();
         }

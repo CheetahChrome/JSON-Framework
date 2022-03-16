@@ -123,6 +123,15 @@ namespace JSON_Display
             set { _BlazoriseText = value; OnPropertyChanged(nameof(BlazoriseText)); }
         }
 
+
+        private string _ComponentText;
+
+        public string ComponentText
+        {
+            get { return _ComponentText; }
+            set { _ComponentText = value; OnPropertyChanged(nameof(ComponentText)); }
+        }
+
         private double _MainFontSize;
 
         public double MainFontSize

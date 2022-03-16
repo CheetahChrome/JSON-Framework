@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Json.Common.Extensions;
 using JSON_Enumerate.Operation;
 
 namespace JSON_Enumerate.Implementation;
@@ -21,7 +22,7 @@ public class BlazorizeDataGrid : JsonOperationBase
         var sb=new StringBuilder();
 
         if (IsNameUndefined)
-            Name=Settings.Name;
+            Name=(Settings.Name).ToPascalCase();
 
         var dto=$"{Name}DTO";
 
