@@ -46,7 +46,7 @@ namespace JSON_Enumerate.Implementation
             if ((Settings != null) && string.IsNullOrWhiteSpace(Settings?.ClassName))
                 Settings.ClassName = Name;
 
-            var name = Name.ToPascalCase();
+            var name = Name; //.ToPascalCase();
 
             if (SettingsSingleton.Settings.AddDTOSuffix)
                 name = $"{name}DTO";

@@ -12,7 +12,7 @@
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="Json Hero V1.2"
+        Title="Json Hero V1.3"
         Height="660"
         Width="840">
     <Window.Resources>
@@ -409,6 +409,15 @@
                      Tag=".sql$ sql documents(.sql) | *.sql"
                      Height="40">
                 <TextBox Text="{Binding SQLTableTypeText}"
+                         PreviewMouseWheel="MouseWheelScroll"
+                         FontSize="{Binding MainFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </TabItem>
+
+            <TabItem Header="SQL Merge"
+                     Width="90"
+                     Tag=".sql$ sql documents(.sql) | *.sql"
+                     Height="40">
+                <TextBox Text="{Binding SQLMergeText}"
                          PreviewMouseWheel="MouseWheelScroll"
                          FontSize="{Binding MainFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </TabItem>

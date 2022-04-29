@@ -22,7 +22,7 @@ public class BlazorizeDataGrid : JsonOperationBase
         var sb=new StringBuilder();
 
         if (IsNameUndefined)
-            Name=(Settings.Name).ToPascalCase();
+            Name=Settings.Name;
 
         var dto=$"{Name}DTO";
 

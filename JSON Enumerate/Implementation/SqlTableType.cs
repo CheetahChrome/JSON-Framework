@@ -45,7 +45,7 @@ namespace JSON_Enumerate.Implementation
                     Name = Settings.Name;
             }
 
-            var name = Name.ToPascalCase();
+            var name = Name; //.ToPascalCase();
 
             sb.AppendLine($"CREATE TYPE [{Schema}].[{name}TT] AS TABLE");
             sb.AppendLine($"({Environment.NewLine}");

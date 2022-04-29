@@ -92,6 +92,9 @@ namespace JSONTreeView
         public static string ToComponentString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
             => doc.RootElement.WalkStructure<BlazorizeComponent, BlazoriseComponentProperty>
                 (new BlazorizeComponent(settings, overrideProperty), null).ToString();
+        public static string ToSQLMergeString(this JsonDocument doc, IJsonSettings settings, System.Windows.Input.ICommand overrideProperty = null)
+            => doc.RootElement.WalkStructure<SqlMerge, SQLProperty>
+                (new SqlMerge(settings, overrideProperty), null).ToString();
 
         /// <summary>
         /// Take a JSON string and parse it into a JsonDocument.

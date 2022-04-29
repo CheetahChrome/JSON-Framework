@@ -211,6 +211,8 @@ namespace JSON_Display
 
                 VM.ComponentText = ValidJsonDoc.ToComponentString(VM.CSharp);
 
+                VM.SQLMergeText = ValidJsonDoc.ToSQLMergeString(VM.CSharp);
+
                 tView.ProcessJson(ValidJsonDoc, false, source);
 
                 tView.OpenFirstItem(true);

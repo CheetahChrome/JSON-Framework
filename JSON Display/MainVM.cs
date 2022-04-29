@@ -115,6 +115,14 @@ namespace JSON_Display
         }
 
 
+        private string _SQLMergeText;
+
+        public string SQLMergeText
+        {
+            get { return _SQLMergeText; }
+            set { _SQLMergeText = value; OnPropertyChanged(nameof(SQLMergeText)); }
+        }
+
         private string _BlazoriseText;
 
         public string BlazoriseText
