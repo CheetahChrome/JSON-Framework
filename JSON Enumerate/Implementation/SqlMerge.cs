@@ -88,7 +88,7 @@ namespace JSON_Enumerate.Implementation
             // 12 adds "     target." length
             var format = string.Format("{{0,-{0}}} = {{1}}", (props.Max(prp => prp.NamePascalCase.Length) + 12));
 
-            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => string.Format(format, $"     Target.{prp.NamePascalCase}", $"SOURCE.{prp.NamePascalCase}")).ToList()));
+            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => string.Format(format, $"     Target.{prp.NamePascalCase}", $"coalesce(SOURCE.{prp.NamePascalCase}, TARGET.{prp.NamePascalCase}) ")).ToList()));
             // sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => $"\tTarget.{prp.NamePascalCase} = SOURCE.{prp.NamePascalCase}").ToList()));
         }
 

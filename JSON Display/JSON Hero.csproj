@@ -9,11 +9,12 @@
     <Version>1.2</Version>
     <Authors>William Wegerson</Authors>
     <Company>Omega Technical Solutions</Company>
-    <Copyright>2021</Copyright>
+    <Copyright>2022</Copyright>
     <PackageIcon>BlueDoc.ico</PackageIcon>
     <ApplicationIcon>BlueDoc.ico</ApplicationIcon>
     <AssemblyVersion>1.1.11.0</AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>

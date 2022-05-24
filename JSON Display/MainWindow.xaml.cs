@@ -91,14 +91,16 @@ namespace JSON_Display
                     // Open document
                     string filename = dialog.FileName;
 
+
                      switch(ti.Header)
                     {
-                        case "Tree":
-                        case "Text": File.WriteAllText(dialog.FileName, VM.JSONText); break;
-                        case "C#" : File.WriteAllText(dialog.FileName, VM.CSharpText); break;
+                        case "Tree"       :
+                        case "Text"       : File.WriteAllText(dialog.FileName, VM.JSONText); break;
+                        case "C#"         : File.WriteAllText(dialog.FileName, VM.CSharpText); break;
                         case "SQL Server" : File.WriteAllText(dialog.FileName, VM.SQLTableText); break;
                         case "Table Type" : File.WriteAllText(dialog.FileName, VM.SQLTableTypeText); break;
-                        case "TBlazorise": File.WriteAllText(dialog.FileName, VM.BlazoriseText); break;
+                        case "SQL Merge"  : File.WriteAllText(dialog.FileName, VM.SQLMergeText); break;
+                        case "Blazorise"  : File.WriteAllText(dialog.FileName, VM.BlazoriseText); break;
                     };
                 }
 
