@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using JSON_Enumerate.Operation;
+using JSON_Models;
 
 namespace JSON_Display.Operation
 {
@@ -84,6 +85,14 @@ namespace JSON_Display.Operation
         {
             get => _SubClassAsIdentityId;
             set { _SubClassAsIdentityId = value; OnPropertyChanged(nameof(SubClassAsIdentityId)); }
+        }
+
+        private List<PropertyOverride> _Overrides;
+
+        public List<PropertyOverride> Overrides
+        {
+            get { return _Overrides; }
+            set { _Overrides = value; OnPropertyChanged(nameof(Overrides)); }
         }
 
         #endregion

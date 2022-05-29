@@ -61,6 +61,7 @@ namespace JSON_Enumerate.Implementation
             sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
 
             sb.AppendLine(")");
+            sb.AppendLine("go");
 
             return sb.ToString();
         }

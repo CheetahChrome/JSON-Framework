@@ -62,11 +62,12 @@ namespace JSON_Enumerate.Implementation
 
             sb.AppendLine($" {name} {{ get; set; }}");
 
-            if (Name.EndsWith("Id"))
-            { 
-                var shortName = name.Substring(0, name.Length - 2);
-                sb.AppendLine($"{prefix}public string {shortName}Str {{ get; set; }}");
-            }
+            // For the mimic property which has the actual string value...only used rarely.
+            //if (Name.EndsWith("Id"))
+            //{ 
+            //    var shortName = name.Substring(0, name.Length - 2);
+            //    sb.AppendLine($"{prefix}public string {shortName}Str {{ get; set; }}");
+            //}
 
             return sb.ToString();
         }

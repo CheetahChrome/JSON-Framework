@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JSON Models\JSON Models.csproj" />
     <ProjectReference Include="..\JSONTreeView\JSONTreeView.csproj" />
   </ItemGroup>
 

@@ -92,7 +92,7 @@ namespace JSON_Display
                     string filename = dialog.FileName;
 
 
-                     switch(ti.Header)
+                    switch (ti.Header)
                     {
                         case "Tree"       :
                         case "Text"       : File.WriteAllText(dialog.FileName, VM.JSONText); break;

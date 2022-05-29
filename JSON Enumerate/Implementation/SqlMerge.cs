@@ -12,7 +12,6 @@ namespace JSON_Enumerate.Implementation
     {
         private string _Schema;
 
-
         public int IdentityStart { get; set; }
 
         public string Schema
@@ -36,7 +35,7 @@ namespace JSON_Enumerate.Implementation
         public override string ToString()
         {
             var sb = new StringBuilder();
-            List<SQLProperty> propsList;
+          // List<SQLProperty> propsList;
 
             // var id = $"{Name}Id";
             if (IsNameUndefined)
@@ -51,7 +50,7 @@ namespace JSON_Enumerate.Implementation
             //sb.AppendLine($"({Environment.NewLine}");
             //// sb.AppendLine($"   [{id}][int] NULL,{Environment.NewLine}");
             ///
-            SprocHeader(sb, name);
+            SprocHeader(sb, name, GetFKoverride(), GetValidFKs());
 
             var props = Properties.Cast<SQLProperty>();
 
@@ -64,11 +63,11 @@ namespace JSON_Enumerate.Implementation
             
             // Insert
 
-            sb.AppendLine(WhenNotMatched());
+            sb.Append(WhenNotMatched(GetFKoverride(), GetValidFKs()));
 
             GenerateColumns(sb, props);
             
-            sb.AppendLine(WhenNotMatchedSource());
+            sb.Append(WhenNotMatchedSource(GetFKoverride(), GetValidFKs()));
             
             GenerateSourceColumns(sb, props);
 
@@ -88,67 +87,92 @@ namespace JSON_Enumerate.Implementation
             // 12 adds "     target." length
             var format = string.Format("{{0,-{0}}} = {{1}}", (props.Max(prp => prp.NamePascalCase.Length) + 12));
 
-            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => string.Format(format, $"     Target.{prp.NamePascalCase}", $"coalesce(SOURCE.{prp.NamePascalCase}, TARGET.{prp.NamePascalCase}) ")).ToList()));
+            
+            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Skip(1).Select(prp => string.Format(format, $"\tTarget.{prp.NamePascalCase}", $"coalesce(SOURCE.{prp.NamePascalCase}, TARGET.{prp.NamePascalCase}) ")).ToList()));
             // sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => $"\tTarget.{prp.NamePascalCase} = SOURCE.{prp.NamePascalCase}").ToList()));
         }
 
         public void GenerateColumns(StringBuilder sb, IEnumerable<SQLProperty> props)
         { 
-            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => $"     {prp.NamePascalCase}" ).ToList()));
+            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Skip(1).Select(prp => $"\t{prp.NamePascalCase}" ).ToList()));
         }
 
         public void GenerateSourceColumns(StringBuilder sb, IEnumerable<SQLProperty> props)
         { 
-            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Select(prp => $"     SOURCE.{prp.NamePascalCase}" ).ToList()));
+            sb.AppendLine(string.Join($",{Environment.NewLine}", props.Skip(1).Select(prp => $"\tSOURCE.{prp.NamePascalCase}" ).ToList()));
         }
 
-        public void SprocHeader(StringBuilder sb, string name)
+        public bool GetFKoverride() => Settings.Overrides.Any(ov => ov.IsFKUsed);
+
+        public List<JSON_Models.PropertyOverride> GetValidFKs() => Settings.Overrides.Where(ov => ov.IsFKUsed).ToList();
+
+        public void SprocHeader(StringBuilder sb, string name, bool fKoverride, List<JSON_Models.PropertyOverride> validFKs)
         {
             var lowerStartName = name.ToFirstCharLower();
+            var tableType = $"@{lowerStartName}TT";
 
-            var tableType = $"{lowerStartName}TT";
+            sb.AppendLine($"create or alter PROCEDURE post.{name}");
+            sb.AppendLine($"{tableType} tt.{name} readonly");
+//            sb.AppendLine($"@{lowerStartName} int = null");
 
-            var header =
-@$"create or alter PROCEDURE post.{name}
-    @{tableType} tt.{name} readonly,
-    @FK***Id int = null
-as
-begin
+            if (fKoverride)
+                validFKs.ForEach(fk => sb.AppendLine($", @{fk.NameAsVariable} {fk.SQL} = null"));
 
--- Get the Id from an existing source if not passed in; Passed in during creation generally.
-declare @FK***Id int = coalesce(@FK***Id, (select top(1) PrimaryId from @{lowerStartName}TT)) ;
+            sb.AppendLine("as");
+            sb.AppendLine("begin");
 
+            if (fKoverride)
+            {
+                sb.AppendLine("-- Get the Id from an existing source if not passed in; Passed in during creation generally.");
+                validFKs.ForEach(fk => sb.AppendLine($"set @{fk.NameAsVariable} = coalesce(@{fk.NameAsVariable}, (select top(1) {fk.PropertyName} from {tableType}));"));
+            }
+
+//            sb.AppendLine($"\tselect top(1) @{lowerStartName}Id = {name}Id from {tableType} order by {name}");
+            var merge = @$"
 merge {Schema}.{name} as TARGET
-using @{tableType} as SOURCE
-on @FK***Id     = TARGET.XXXXXId,";
+using {tableType} as SOURCE
+on SOURCE.{Name}Id = TARGET.{Name}Id";
+           sb.AppendLine(merge);
 
-            sb.AppendLine(header);
+            if (fKoverride)
+                validFKs.ForEach(fk => sb.AppendLine($"AND @{fk.NameAsVariable}  = TARGET.{fk.PropertyName}"));
+
         }
 
         public string WhenMatched()
         {
-            return  
+            return
 @"when matched then
-update set
-     Target.***Id               = Source.***Id,";
+update set";
         }
 
-        public string WhenNotMatched()
+        public string WhenNotMatched(bool fKoverride, List<JSON_Models.PropertyOverride> validFKs)
         {
-            return
+            var sbNM = new StringBuilder();
+
+            sbNM.AppendLine(
 @"when not matched then
   insert  
-  (
-     ****Id";
+  (");
+
+            if (fKoverride)
+                validFKs.ForEach(fk => sbNM.AppendLine($"\t{fk.PropertyName},"));
+
+            return sbNM.ToString();
+
         }
 
-        public string WhenNotMatchedSource()
+        public string WhenNotMatchedSource(bool fKoverride, List<JSON_Models.PropertyOverride> validFKs)
         {
-            return
-@" )
+            var sbNM = new StringBuilder(@" )
 values
-   (   
-     @FK***Id,";
+   (");
+
+
+            if (fKoverride)
+                validFKs.ForEach(fk => sbNM.AppendLine($"\t@{fk.NameAsVariable},"));
+
+            return sbNM.ToString();
 
         }
 

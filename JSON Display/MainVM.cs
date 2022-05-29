@@ -11,6 +11,7 @@ using JSON_Display.Models;
 using JSON_Display.Operation;
 using System.Diagnostics;
 using System.Linq;
+using JSON_Models;
 
 namespace JSON_Display
 {
@@ -166,6 +167,7 @@ namespace JSON_Display
 
         public bool HasError => !string.IsNullOrEmpty(Error);
 
+
         // Nuget on using Microsoft.Expression.Interactivity.Core; for ICommand
         public ICommand ClearError => new OperationCommand((_) => { Error = string.Empty; });
         public ICommand ErrorCopyToClipboard { get; set; }
@@ -180,6 +182,12 @@ namespace JSON_Display
             Database = new OperationSettingsDatabase();
             RecentJsons = new ObservableCollection<string>() { @"C:\Temp\Initial.Json", @"C:\Temp\Full.Json" };
             MRUS = new ObservableCollection<MRU>(GetMRUS());
+
+            CSharp.Overrides = new List<PropertyOverride>()
+            {
+                new PropertyOverride() { IsFKUsed = true, PropertyName="ProjectId", SQL="int", CSharp="int"}
+            };
+
         }
         #endregion
 
@@ -195,8 +203,14 @@ namespace JSON_Display
             try
             {
                 var mruText = Properties.Settings.Default.MRUS;
-                return string.IsNullOrWhiteSpace(mruText) ? new List<MRU>()
+                var MRUs = string.IsNullOrWhiteSpace(mruText) ? new List<MRU>()
                     : JsonSerializer.Deserialize<List<MRU>>(mruText);
+
+                if (MRUs.Count > 10)
+                    MRUs = MRUs.Skip(MRUs.Count - 10).ToList();
+
+                return MRUs;
+
             }
             catch (Exception ex)
             {

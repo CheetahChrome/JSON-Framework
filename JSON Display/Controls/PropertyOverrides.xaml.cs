@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JSON_Display.Models;
+using JSON_Models;
 
 namespace JSON_Display.Controls
 {

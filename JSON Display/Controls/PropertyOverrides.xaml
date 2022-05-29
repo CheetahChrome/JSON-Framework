@@ -51,6 +51,7 @@
             MinColumnWidth="70"
             Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" ColumnHeaderStyle="{DynamicResource dgColumHeader}">
         <DataGrid.Columns>
+            <DataGridCheckBoxColumn Binding="{Binding IsFKUsed}" Header="FK On"/>
             <DataGridTextColumn Binding="{Binding PropertyName}" Header="Name"   />
             <DataGridTextColumn Binding="{Binding JSONPropertyType}" Header="JSON Type" />
             <DataGridTextColumn Binding="{Binding CSharp}" Header="C# Type" />

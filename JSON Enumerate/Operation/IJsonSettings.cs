@@ -1,4 +1,7 @@
-﻿namespace JSON_Enumerate.Operation
+﻿using JSON_Models;
+using System.Collections.Generic;
+
+namespace JSON_Enumerate.Operation
 {
     public interface IJsonSettings
     {
@@ -10,5 +13,7 @@
         bool AddTableTypeConstraint { get; set; }
         bool IsSortProperties { get; set; }
         bool IsNameUndefined { get; set; }
+
+        List<PropertyOverride> Overrides { get; set; }
     }
 }

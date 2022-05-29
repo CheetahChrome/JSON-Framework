@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JSON Models\JSON Models.csproj" />
     <ProjectReference Include="..\Json.Common\Json.Common.csproj" />
   </ItemGroup>
 
