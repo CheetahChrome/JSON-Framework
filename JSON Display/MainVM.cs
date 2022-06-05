@@ -248,6 +248,9 @@ namespace JSON_Display
 
             Error = null;
 
+            CSharp.ClassName =
+            CSharp.Name      = String.Empty;
+
             if (!ignoreJsonText)
                 JSONText = null;
         }

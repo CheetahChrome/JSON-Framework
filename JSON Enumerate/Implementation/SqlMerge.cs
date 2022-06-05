@@ -177,11 +177,30 @@ values
         }
 
         public string Fini()
-            => @");
+        {
+             
+            return @$");
 
     return 200;
 end
-go";
+go
 
+
+CREATE or Alter PROCEDURE get.{Name}
+ @projectId int
+AS
+    
+select IsNull((select * from info.{Name} where ProjectId = @projectId for json auto), '[]');
+
+RETURN 200 
+go
+
+
+
+
+
+
+";
+        }
     }
 }

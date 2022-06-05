@@ -62,6 +62,8 @@ namespace JSON_Enumerate.Implementation
 
             sb.AppendLine(")");
             sb.AppendLine("go");
+            sb.AppendLine("-- drop type if exists [{Schema}].[{name}TT]");
+            sb.AppendLine("go");
 
             return sb.ToString();
         }
