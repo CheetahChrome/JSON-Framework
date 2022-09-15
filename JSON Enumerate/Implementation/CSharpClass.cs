@@ -66,7 +66,7 @@ namespace JSON_Enumerate.Implementation
                     propsList.ForEach(prp => prp.TableTypeNumber = ++tableTypeNumber);
 
                 //      [TableType(1)]
-                sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp.ToString())));
+                sb.AppendLine(string.Join(Environment.NewLine, propsList.Select(prp => prp?.ToString() ?? "PRP Failure")));
 
                 sb.AppendLine($"}}{Environment.NewLine}");
 

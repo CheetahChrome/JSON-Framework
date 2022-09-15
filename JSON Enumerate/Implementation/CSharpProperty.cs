@@ -20,14 +20,22 @@ namespace JSON_Enumerate.Implementation
         public override string ToString()
         {
             const string prefix = "  ";
+            string name = string.Empty;
 
             var sb = new StringBuilder();
 
             if (TableTypeNumber > 0)
                 sb.AppendLine($"{prefix}[TableType({TableTypeNumber})]");
 
-            char c2 = Name[2];
-            var name = Char.IsLower(c2) ? Name : Name.ToPascalCase();
+            if (Name.Length > 3)
+            {
+                char c2 = Name[2];
+                name = Char.IsLower(c2) ? Name : Name.ToPascalCase();
+            }
+            else
+            {
+                name = Name;
+            }
 
             // [JsonProperty("Wind")]
             if (SettingsSingleton.Settings.AddJsonProperty)
