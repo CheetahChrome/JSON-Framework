@@ -20,6 +20,7 @@
   <ItemGroup>
     <None Remove="Assets\axis-x-rotate-counterclockwise.png" />
     <None Remove="Assets\clipboard-arrow-down-outline.png" />
+    <None Remove="Assets\close.png" />
     <None Remove="Assets\history.png" />
     <None Remove="Assets\nuke.black.png" />
     <None Remove="Assets\nuke.png" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <Resource Include="Assets\axis-x-rotate-counterclockwise.png" />
     <Resource Include="Assets\clipboard-arrow-down-outline.png" />
+    <Resource Include="Assets\close.png" />
     <Resource Include="Assets\history.png" />
     <Resource Include="Assets\nuke.png" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace JSON_Enumerate.Implementation
 
         public string Name { get; set; }
 
-        public string NamePascalCase => Name.ToPascalCase();
+        public string NamePascalCase => Name?.ToPascalCase() ?? string.Empty;
 
         public int Size { get; set; }
 

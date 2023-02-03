@@ -370,7 +370,19 @@
                 <TreeView x:Name="tView"
                           HorizontalAlignment="Stretch"
                           FontSize="{Binding MainFontSize}"
-                          PreviewMouseWheel="MouseWheelScroll" />
+                          PreviewMouseWheel="MouseWheelScroll" >
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Click="CopyChildrenToClipboard"
+                                          Header="Copy Children To Clipboard">
+                                <MenuItem.Icon>
+                                    <Image Source="assets/check_green.png"
+                                               Height="16" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                </TreeView>
             </TabItem>
             <TabItem Header="Text"
                      Width="70"

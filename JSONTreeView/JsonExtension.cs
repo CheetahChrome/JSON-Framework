@@ -114,7 +114,7 @@ namespace JSONTreeView
                 result = JsonDocument.Parse(json);
                 isValid = (result != null);
 
-                if (isValid)
+                if (!isValid)
                     errorJSON = $@"{{ ""Error"" : ""No JSON Doc Returned from Parse."", ""Exception"" : ""-None-"" }}";
             }
             catch (Exception ex)
@@ -122,8 +122,8 @@ namespace JSONTreeView
                 errorJSON = $@"{{ ""Error"" : ""{ex.Message}"", ""Exception"" : ""{ex.GetType()}"" }}";
             }
 
-            if (!string.IsNullOrEmpty(errorJSON))
-                errorMessage = JsonDocument.Parse(errorJSON);
+            //if (!string.IsNullOrEmpty(errorJSON))
+            //    errorMessage = JsonDocument.Parse(errorJSON);
 
             return (isValid, result, errorMessage);
         }

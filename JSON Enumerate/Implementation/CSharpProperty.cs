@@ -27,15 +27,18 @@ namespace JSON_Enumerate.Implementation
             if (TableTypeNumber > 0)
                 sb.AppendLine($"{prefix}[TableType({TableTypeNumber})]");
 
-            if (Name.Length > 3)
-            {
-                char c2 = Name[2];
-                name = Char.IsLower(c2) ? Name : Name.ToPascalCase();
-            }
+            if (Name != null) // Some arrays are just arrays and not properties. TODO Fix to jump out?
+                if (Name.Length > 3)
+                {
+                    char c2 = Name[2];
+                    name = Char.IsLower(c2) ? Name : Name.ToPascalCase();
+                }
+                else
+                {
+                    name = Name;
+                }
             else
-            {
-                name = Name;
-            }
+                name = string.Empty;
 
             // [JsonProperty("Wind")]
             if (SettingsSingleton.Settings.AddJsonProperty)

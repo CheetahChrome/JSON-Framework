@@ -202,6 +202,10 @@ namespace JSON_Display
                 if (!skipJsonText)
                     VM.JSONText = (tView.Tag as JsonDocument).ToFormattedJsonString();
             }
+            catch (System.ApplicationException sax) when (sax.Message.StartsWith("Invalid JSON snippet received, must start with object or array of objects."))
+            {
+                VM.Error = $"Parsing Error{Environment.NewLine}Json must start as an object or an array.{Environment.NewLine} {text[..100]}{Environment.NewLine}";
+            }
             catch (Exception ex)
             {
                 VM.Error = ex.Demystify().ToString();
@@ -291,6 +295,30 @@ namespace JSON_Display
             {
                 VM.Error = ex.Demystify().ToString();
             }
+        }
+
+        private void CopyChildrenToClipboard(object sender, RoutedEventArgs e)
+        {
+            var node = tView.SelectedItem as TreeViewItemEx;
+            
+            if (node == null)
+            {
+                MessageBox.Show("Please highlight a node to process.");
+                return;
+            }
+
+            if (!node.HasItems)
+            {
+                MessageBox.Show($"{node.Header.ToString()} does not have any items.");
+                return;
+            }
+
+            var lst = string.Join(Environment.NewLine, node.Items.OfType<TreeViewItemEx>().Select(nd => nd.Header.ToString()));
+
+            MessageBox.Show(lst);
+
+            Clipboard.SetText(lst);
+
         }
     }
 
