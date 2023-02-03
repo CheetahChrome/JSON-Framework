@@ -315,7 +315,7 @@ namespace JSON_Display
 
             var lst = string.Join(Environment.NewLine, node.Items.OfType<TreeViewItemEx>().Select(nd => nd.Header.ToString()));
 
-            MessageBox.Show(lst);
+            //MessageBox.Show(lst);
 
             Clipboard.SetText(lst);
 

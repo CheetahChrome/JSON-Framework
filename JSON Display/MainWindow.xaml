@@ -12,7 +12,7 @@
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="Json Hero V1.4"
+        Title="Json Hero V1.5"
         Height="660"
         Width="840">
     <Window.Resources>
