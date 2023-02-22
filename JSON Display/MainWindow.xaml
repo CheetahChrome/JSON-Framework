@@ -12,7 +12,7 @@
         DragEnter="DNDEnter"
         Drop="DragDrop"
         GiveFeedback="DragFeedback"
-        Title="Json Hero V1.5"
+        Title="Json Hero V1.6"
         Height="660"
         Width="840">
     <Window.Resources>
@@ -380,6 +380,10 @@
                                                Height="16" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Click="ChildrenToMarkdownTable"
+                                        Header="Children To Markdown Table">
+                            </MenuItem>
+
                         </ContextMenu>
                     </TreeView.ContextMenu>
                 </TreeView>

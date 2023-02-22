@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+
 using JSON_Display.Controls;
 using JSON_Display.Models;
 using JSON_Display.Operation;
@@ -297,21 +299,27 @@ namespace JSON_Display
             }
         }
 
-        private void CopyChildrenToClipboard(object sender, RoutedEventArgs e)
+        private bool IsValidSelection(TreeViewItemEx node)
         {
-            var node = tView.SelectedItem as TreeViewItemEx;
-            
             if (node == null)
             {
                 MessageBox.Show("Please highlight a node to process.");
-                return;
+                return false;
             }
 
             if (!node.HasItems)
             {
                 MessageBox.Show($"{node.Header.ToString()} does not have any items.");
-                return;
+                return false;
             }
+
+            return true;
+        }
+        private void CopyChildrenToClipboard(object sender, RoutedEventArgs e)
+        {
+            var node = tView.SelectedItem as TreeViewItemEx;
+
+            if (!IsValidSelection(node)) return;
 
             var lst = string.Join(Environment.NewLine, node.Items.OfType<TreeViewItemEx>().Select(nd => nd.Header.ToString()));
 
@@ -319,6 +327,43 @@ namespace JSON_Display
 
             Clipboard.SetText(lst);
 
+        }
+
+
+
+        private void ChildrenToMarkdownTable(object sender, RoutedEventArgs e)
+        {
+            var n2 = tView.SelectedItem as TreeViewItem;
+
+            if ((n2 is null) || (!n2.GetType().IsAssignableFrom(typeof(TreeViewItem))))
+            {
+                MessageBox.Show("Need an array parent");
+                return; 
+            }
+
+            var items = n2.Items.Cast<TreeViewItemEx>().ToList();
+
+            var result = items.Select(arrItem => arrItem.Items.OfType<TreeViewItemEx>()
+                                                              .Select(itm => Regex.Match(itm.Header.ToString(), @"(?<Header>[^\s]+)[:\s\x22\\]+(?<Value>[^\x22]+)"))
+                                                              .Select(mt => new { Header = mt.Groups["Header"].Value, Value = mt.Groups["Value"].Value })
+                                                              .ToList()
+                                   );
+
+            var sb = new StringBuilder();
+            // Generate Headers
+
+            var individualHeaders = result.First().Select(itm => itm.Header.ToString()).ToList();
+            var header = string.Join($" | ", individualHeaders);
+            sb.AppendLine($"| {header} |");
+            var split = string.Join($" | ", individualHeaders.Select(itm => " - "));
+            sb.AppendLine($"| {split} |");
+
+            result.ToList().ForEach(itm => sb.AppendLine("| " + string.Join(" | ", itm.Select(i2 => i2.Value)) + " |")) ;
+
+            var md = sb.ToString();
+            MessageBox.Show(md);
+
+            Clipboard.SetText(md);
         }
     }
 
